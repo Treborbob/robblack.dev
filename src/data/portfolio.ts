@@ -32,9 +32,9 @@ export const portfolio: Portfolio = {
     github: 'https://github.com/treborbob',
     linkedin: 'https://www.linkedin.com/in/rob-black-developer/',
 
-    summary: `Highly experienced software developer with nearly three decades in the industry, spanning web, application, and game development. Currently a Senior Developer at Switch Studios, serving as the studio's go-to technical authority — bridging leadership, development, and QA. My strengths lie not in churning out tickets but in enabling others to work smarter, improving workflows, tools, and processes to elevate overall team capability.
+    summary: `Senior Developer with nearly three decades across web, application, and game development. Currently serving as Switch Studios' go-to technical authority, bridging leadership, development, and QA. My strength lies in enabling others to work smarter—improving workflows, tools, and processes to elevate overall team capability.
 
-Recent focus has been on developer experience, internal tooling, and AI strategy, helping align technical initiatives with business goals. I mentor developers, streamline SDLC processes, and lead technical R&D efforts that future-proof studio operations.`,
+Focused on developer experience, internal tooling, and AI strategy. I mentor developers, streamline SDLC processes, and lead technical R&D efforts that align with business goals and future-proof studio operations.`,
 
     competencies: [
         {
@@ -74,11 +74,11 @@ Recent focus has been on developer experience, internal tooling, and AI strategy
             period: 'Mar 2022 – Present',
             description: "Promoted after internal restructuring; now acts as the studio's senior technical advisor.",
             highlights: [
-                'Supports developers and QA through mentoring, code reviews, workflow improvements, and introducing new tools and standards',
-                'Implements automation, static analysis, and coding standards to improve product quality and developer experience',
-                "Leads the studio's AI strategy, evaluating and integrating emerging tools",
-                'Represents the studio at management meetings and conferences, helping align technical direction with business objectives',
-                'Runs weekly developer sessions and promotes collaboration and innovation across the team'
+                'Drove AI tool adoption across 90% of the development team, creating integration guides and best practices',
+                'Implemented automation, static analysis, and quality gates to improve product quality and developer experience',
+                'Mentors developers through code reviews, workflow improvements, and introduction of new tools and standards',
+                'Represents technical perspective at management meetings and conferences, aligning tech direction with business objectives',
+                'Runs weekly developer sessions promoting collaboration and innovation across the team'
             ]
         },
         {
