@@ -3,76 +3,207 @@ import { portfolio } from '../data/portfolio';
 import Layout from '../layouts/Layout.astro';
 
 // Display limits
-const MAX_EXPERIENCE_DISPLAYED = 4;
-const MAX_HIGHLIGHTS_DISPLAYED = 2;
-const MAX_SKILLS_DISPLAYED = 3;
+const MAX_EXPERIENCE_DISPLAYED = 5;
+const MAX_CURRENT_ROLE_HIGHLIGHTS_DISPLAYED = 3;
+const MAX_TIMELINE_HIGHLIGHTS_DISPLAYED = 2;
+const MAX_SKILLS_DISPLAYED = 4;
+const summaryParagraphs = portfolio.summary.split('\n\n');
+const introParagraphs = summaryParagraphs.slice(0, 1);
+const aboutParagraphs = summaryParagraphs.slice(1);
 ---
 
 <Layout title={`${portfolio.name} - Portfolio`}>
     <!-- Bento Grid Layout -->
     <div class="bento-grid">
-        <!-- Hero Section - Large Card -->
-        <div class="bento-card col-span-2 bg-gradient-to-br from-violet-600 to-indigo-600">
-            <div class="flex gap-6 items-start">
-                <img 
-                    src="/SP_Avatar_Rob.png" 
-                    alt="Rob Black" 
-                    class="w-28 h-28 md:w-32 md:h-32 rounded-2xl object-cover shrink-0 border-4 border-white/20 shadow-lg"
-                />
-                <div class="flex flex-col justify-center flex-1">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4 text-white">Hi, I'm Rob 👋</h1>
-                    <p class="text-lg md:text-xl text-violet-100 mb-4 md:mb-6">{portfolio.title}</p>
-                    <div class="text-sm md:text-base text-violet-50 leading-relaxed">
-                        {portfolio.summary.split('\n\n')[0]}
+        <div class="hero-grid">
+            <!-- Hero Section - Large Card -->
+            <div class="bento-card col-span-2 bg-gradient-to-br from-violet-600 via-indigo-600 to-slate-900 border border-violet-500/20 shadow-[0_24px_80px_rgba(79,70,229,0.28)]">
+                <div class="flex gap-6 items-start">
+                    <img 
+                        src="/SP_Avatar_Rob.png" 
+                        alt="Rob Black" 
+                        class="w-28 h-28 md:w-32 md:h-32 rounded-2xl object-cover shrink-0 border-4 border-white/20 shadow-lg"
+                    />
+                    <div class="flex flex-col justify-center flex-1">
+                        <p class="text-sm uppercase tracking-[0.28em] text-violet-200/80 mb-3">About me</p>
+                        <h1 class="text-4xl md:text-5xl font-bold mb-4 text-white">Hi, I'm Rob 👋</h1>
+                        <p class="text-lg md:text-xl text-violet-100 mb-5 md:mb-6 max-w-3xl">{portfolio.title}</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/90 backdrop-blur">{portfolio.currentRole}</span>
+                            <span class="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/90 backdrop-blur">{portfolio.currentCompany}</span>
+                            <span class="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/90 backdrop-blur">{portfolio.location}</span>
+                        </div>
+                        <div class="space-y-3 text-sm md:text-base text-violet-50 leading-relaxed max-w-3xl">
+                            {introParagraphs.map((paragraph) => (
+                                <p>{paragraph}</p>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 grid gap-4 md:grid-cols-2">
+                    <div class="rounded-2xl border border-white/10 bg-slate-950/25 p-4 backdrop-blur-sm">
+                        <p class="text-xs uppercase tracking-[0.24em] text-violet-200/70 mb-2">Career span</p>
+                        <p class="text-sm text-violet-50/90">{portfolio.yearsExperienceLabel}</p>
+                    </div>
+                    <div class="rounded-2xl border border-white/10 bg-slate-950/25 p-4 backdrop-blur-sm">
+                        <p class="text-xs uppercase tracking-[0.24em] text-violet-200/70 mb-2">Where I work best</p>
+                        <p class="text-sm text-violet-50/90">Tooling, delivery systems, mentoring, practical automation, and the glue that makes teams easier to support.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Role Highlight -->
+            {portfolio.experience && portfolio.experience.length > 0 && (
+                <div class="bento-card h-full bg-slate-900/95 border border-slate-800">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="text-xs font-semibold text-violet-400 uppercase tracking-wide">Current Role</span>
+                        <span class="text-xs text-slate-500">{portfolio.experience[0].period.split('–')[0].trim()} – Present</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-100 mb-2">{portfolio.experience[0].role}</h3>
+                    <p class="text-sm text-slate-400 mb-3">{portfolio.experience[0].company}</p>
+                    <p class="text-sm text-slate-300 leading-relaxed">{portfolio.experience[0].description}</p>
+                    {portfolio.experience[0].highlights && portfolio.experience[0].highlights.length > 0 && (
+                        <ul class="mt-4 space-y-2 text-sm text-slate-400" role="list">
+                            {portfolio.experience[0].highlights.slice(0, MAX_CURRENT_ROLE_HIGHLIGHTS_DISPLAYED).map((highlight) => (
+                                <li class="flex gap-2">
+                                    <span class="text-violet-500 shrink-0">→</span>
+                                    <span>{highlight}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            )}
+
+            <!-- Contact -->
+            <div class="bento-card h-full bg-slate-900/95 border border-slate-800">
+                <p class="text-xs uppercase tracking-[0.24em] text-slate-500 mb-3">Connect</p>
+                <h3 class="text-xl font-semibold mb-4 text-slate-100">Get in touch</h3>
+                <p class="text-sm text-slate-400 leading-relaxed mb-5">If you're interested in developer tooling, internal platforms, delivery systems, or practical automation, I'm always happy to compare notes.</p>
+                <div class="space-y-3">
+                    {portfolio.email && (
+                        <a href={`mailto:${portfolio.email}`} class="flex items-center gap-2 text-slate-300 hover:text-violet-400 no-underline transition-colors" aria-label={`Email me at ${portfolio.email}`}>
+                            <span aria-hidden="true">📧</span>
+                            <span class="text-sm">Email</span>
+                        </a>
+                    )}
+                    {portfolio.github && (
+                        <a href={portfolio.github} class="flex items-center gap-2 text-slate-300 hover:text-violet-400 no-underline transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Visit my GitHub profile">
+                            <span aria-hidden="true">💻</span>
+                            <span class="text-sm">GitHub</span>
+                        </a>
+                    )}
+                    {portfolio.linkedin && (
+                        <a href={portfolio.linkedin} class="flex items-center gap-2 text-slate-300 hover:text-violet-400 no-underline transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Visit my LinkedIn profile">
+                            <span aria-hidden="true">💼</span>
+                            <span class="text-sm">LinkedIn</span>
+                        </a>
+                    )}
+                </div>
+            </div>
+        </div>
+
+        <!-- Selected Work -->
+        <div class="bento-card col-span-4 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 border border-slate-700">
+            <div class="flex items-center justify-between gap-4 mb-6 flex-wrap">
+                <div>
+                    <p class="text-xs uppercase tracking-[0.24em] text-slate-500 mb-2">Selected work</p>
+                    <h2 class="text-2xl font-bold text-slate-100">Private projects, public outcomes</h2>
+                </div>
+                <p class="max-w-2xl text-sm text-slate-400">Most of my current work lives in private repositories, but these projects reflect the kind of systems thinking, delivery discipline, and product ownership I bring to teams.</p>
+            </div>
+            <div class="grid gap-4 xl:grid-cols-3">
+                {portfolio.projects.map((project) => (
+                    <article class="rounded-2xl border border-slate-800 bg-slate-950/70 p-5 h-full flex flex-col">
+                        <div class="flex items-center justify-between gap-3 mb-3">
+                            <h3 class="text-lg font-semibold text-slate-100">{project.name}</h3>
+                            <span class="rounded-full border border-violet-500/30 bg-violet-500/10 px-2.5 py-1 text-[11px] uppercase tracking-[0.18em] text-violet-300">{project.label}</span>
+                        </div>
+                        <p class="text-sm leading-relaxed text-slate-300 mb-4">{project.description}</p>
+                        <p class="text-sm leading-relaxed text-slate-400 mb-4">{project.impact}</p>
+                        <div class="mt-auto flex flex-wrap gap-2">
+                            {project.stack.map((item) => (
+                                <span class="rounded-full bg-slate-800 px-2.5 py-1 text-xs text-slate-300">{item}</span>
+                            ))}
+                        </div>
+                    </article>
+                ))}
+            </div>
+        </div>
+
+        <div class="pair-grid">
+            <!-- About / Working Style -->
+            <div class="bento-card col-span-2 bg-slate-900/95 border border-slate-800">
+                <div class="flex items-center justify-between gap-4 mb-6 flex-wrap">
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.24em] text-slate-500 mb-2">How I work</p>
+                        <h2 class="text-2xl font-bold text-slate-100">Pragmatic, systems-minded, and delivery focused</h2>
+                    </div>
+                </div>
+                <div class="grid gap-6 lg:grid-cols-[1.3fr_1fr] h-full">
+                    <div class="space-y-4 text-sm leading-relaxed text-slate-300">
+                        {aboutParagraphs.map((paragraph) => (
+                            <p>{paragraph}</p>
+                        ))}
+                    </div>
+                    <div class="space-y-4">
+                        {portfolio.workingStyle.map((section) => (
+                            <div class="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
+                                <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-violet-400 mb-3">{section.title}</h3>
+                                <ul class="space-y-2 text-sm text-slate-400" role="list">
+                                    {section.points.map((point) => (
+                                        <li class="flex gap-2">
+                                            <span class="text-violet-500 shrink-0">→</span>
+                                            <span>{point}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Focus Areas / Best Fit -->
+            <div class="bento-card col-span-2 bg-slate-900/95 border border-slate-800">
+                <div class="flex items-center justify-between gap-4 mb-6 flex-wrap">
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.24em] text-slate-500 mb-2">Focus and themes</p>
+                        <h2 class="text-2xl font-bold text-slate-100">Where I spend my energy</h2>
+                    </div>
+                    <p class="max-w-md text-sm text-slate-400">The work I enjoy most usually sits where delivery systems, mentoring, automation, and practical product thinking overlap.</p>
+                </div>
+                <div class="grid gap-4 md:grid-cols-2">
+                    {portfolio.focusAreas.map((area) => (
+                        <div class="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
+                            <h3 class="text-base font-semibold text-slate-100 mb-2">{area.title}</h3>
+                            <p class="text-sm leading-relaxed text-slate-400">{area.description}</p>
+                        </div>
+                    ))}
+                </div>
+                <div class="mt-6 border-t border-slate-800 pt-5">
+                        <p class="text-xs uppercase tracking-[0.24em] text-slate-500 mb-3">The kinds of work I naturally lean toward</p>
+                    <div class="flex flex-wrap gap-2">
+                        {portfolio.idealRoles.map((role) => (
+                            <span class="rounded-full border border-slate-700 bg-slate-950/80 px-3 py-2 text-sm text-slate-300">{role}</span>
+                        ))}
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Quick Stats / Contact -->
-        <div class="bento-card bg-slate-900 border border-slate-800">
-            <h3 class="text-lg font-semibold mb-4 text-violet-400">Get in Touch</h3>
-            <div class="space-y-3">
-                {portfolio.email && (
-                    <a href={`mailto:${portfolio.email}`} class="flex items-center gap-2 text-slate-300 hover:text-violet-400 no-underline transition-colors" aria-label={`Email me at ${portfolio.email}`}>
-                        <span aria-hidden="true">📧</span>
-                        <span class="text-sm">Email</span>
-                    </a>
-                )}
-                {portfolio.github && (
-                    <a href={portfolio.github} class="flex items-center gap-2 text-slate-300 hover:text-violet-400 no-underline transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Visit my GitHub profile">
-                        <span aria-hidden="true">💻</span>
-                        <span class="text-sm">GitHub</span>
-                    </a>
-                )}
-                {portfolio.linkedin && (
-                    <a href={portfolio.linkedin} class="flex items-center gap-2 text-slate-300 hover:text-violet-400 no-underline transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Visit my LinkedIn profile">
-                        <span aria-hidden="true">💼</span>
-                        <span class="text-sm">LinkedIn</span>
-                    </a>
-                )}
-            </div>
-        </div>
-
-        <!-- Current Role Highlight -->
-        {portfolio.experience && portfolio.experience.length > 0 && (
-            <div class="bento-card bg-slate-900 border border-slate-800">
-                <div class="flex items-start justify-between mb-3">
-                    <span class="text-xs font-semibold text-violet-400 uppercase tracking-wide">Current Role</span>
-                    <span class="text-xs text-slate-500">{portfolio.experience[0].period.split('–')[0].trim()} – Present</span>
-                </div>
-                <h3 class="text-xl font-bold text-slate-100 mb-2">{portfolio.experience[0].role}</h3>
-                <p class="text-sm text-slate-400 mb-3">{portfolio.experience[0].company}</p>
-                <p class="text-sm text-slate-300 leading-relaxed">{portfolio.experience[0].description}</p>
-            </div>
-        )}
-
         <!-- Skills Grid -->
-        <div class="bento-card col-span-4 bg-slate-900 border border-slate-800">
-            <h2 class="text-2xl font-bold mb-6 text-slate-100">Core Competencies</h2>
+        <div class="bento-card col-span-4 bg-slate-900/95 border border-slate-800">
+            <div class="flex items-center justify-between gap-4 mb-6 flex-wrap">
+                <div>
+                    <p class="text-xs uppercase tracking-[0.24em] text-slate-500 mb-2">Capabilities</p>
+                    <h2 class="text-2xl font-bold text-slate-100">Core competencies</h2>
+                </div>
+                <p class="max-w-2xl text-sm text-slate-400">A mix of delivery tooling, engineering leadership, automation, and hands-on development across product and internal systems work.</p>
+            </div>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {portfolio.competencies.map((comp) => (
-                    <div class="space-y-3 pb-4 border-b border-slate-800 last:border-b-0 lg:border-b-0">
+                    <div class="space-y-3 rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
                         <div class="flex items-center gap-2">
                             <span class="text-lg" aria-hidden="true">✦</span>
                             <h3 class="text-sm font-semibold text-violet-400">{comp.category}</h3>
@@ -89,48 +220,54 @@ const MAX_SKILLS_DISPLAYED = 3;
             </div>
         </div>
 
-        <!-- Experience Timeline -->
-        <div class="bento-card col-span-2 bg-slate-900 border border-slate-800">
-            <h2 class="text-2xl font-bold mb-6 text-slate-100">Experience</h2>
-            <div class="space-y-6">
-                {portfolio.experience.slice(0, MAX_EXPERIENCE_DISPLAYED).map((exp) => (
-                    <div class="border-l-2 border-violet-600 pl-4">
-                        <div class="flex justify-between items-baseline mb-1 flex-wrap gap-2">
-                            <h3 class="text-lg font-semibold text-slate-100">{exp.company}</h3>
-                            <span class="text-xs text-slate-500">{exp.period}</span>
+        <div class="pair-grid">
+            <!-- Experience Timeline -->
+            <div class="bento-card col-span-2 bg-slate-900/95 border border-slate-800">
+                <p class="text-xs uppercase tracking-[0.24em] text-slate-500 mb-2">Recent experience</p>
+                <h2 class="text-2xl font-bold mb-6 text-slate-100">Roles and responsibilities</h2>
+                <div class="space-y-6">
+                    {portfolio.experience.slice(0, MAX_EXPERIENCE_DISPLAYED).map((exp) => (
+                        <div class="border-l-2 border-violet-600 pl-4">
+                            <div class="flex justify-between items-baseline mb-1 flex-wrap gap-2">
+                                <h3 class="text-lg font-semibold text-slate-100">{exp.company}</h3>
+                                <span class="text-xs text-slate-500">{exp.period}</span>
+                            </div>
+                            <p class="text-sm text-violet-400 mb-2">{exp.role}</p>
+                            <p class="text-sm text-slate-400 mb-3 leading-relaxed">{exp.description}</p>
+                            {exp.highlights && exp.highlights.length > 0 && (
+                                <ul class="text-sm text-slate-400 space-y-1" role="list">
+                                    {exp.highlights.slice(0, MAX_TIMELINE_HIGHLIGHTS_DISPLAYED).map((highlight) => (
+                                        <li class="flex gap-2">
+                                            <span class="text-violet-500 shrink-0">→</span>
+                                            <span>{highlight}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
-                        <p class="text-sm text-violet-400 mb-2">{exp.role}</p>
-                        {exp.highlights && exp.highlights.length > 0 && (
-                            <ul class="text-sm text-slate-400 space-y-1" role="list">
-                                {exp.highlights.slice(0, MAX_HIGHLIGHTS_DISPLAYED).map((highlight) => (
-                                    <li class="flex gap-2">
-                                        <span class="text-violet-500 shrink-0">→</span>
-                                        <span>{highlight}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </div>
-                ))}
+                    ))}
+                </div>
+            </div>
+
+            <!-- Earlier Career -->
+            <div class="bento-card col-span-2 bg-slate-900/95 border border-slate-800">
+                <p class="text-xs uppercase tracking-[0.24em] text-slate-500 mb-2">Earlier career</p>
+                <h2 class="text-2xl font-bold text-slate-100 mb-3">Experience that goes back to the early web</h2>
+                <p class="text-sm leading-relaxed text-slate-400 mb-6">My more recent roles sit on top of a much longer career across the commercial web, application development, and interactive products. That longer runway is a big part of why I tend to see both the code and the wider delivery system around it.</p>
+                <div class="space-y-5">
+                    {portfolio.careerJourney.map((item) => (
+                        <div class="border-l-2 border-violet-600/70 pl-4">
+                            <div class="flex items-baseline justify-between gap-3 mb-1 flex-wrap">
+                                <h3 class="text-base font-semibold text-slate-100">{item.title}</h3>
+                                <span class="text-xs uppercase tracking-[0.18em] text-slate-500">{item.period}</span>
+                            </div>
+                            <p class="text-sm leading-relaxed text-slate-400">{item.description}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
 
-        <!-- Projects Placeholder -->
-        <div class="bento-card col-span-2 bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700">
-            <div class="py-8">
-                <h2 class="text-2xl font-bold mb-6 text-slate-100">Selected Projects</h2>
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="text-4xl" aria-hidden="true">🚀</div>
-                    <div class="flex-1">
-                        <p class="text-slate-300 mb-3">Exciting projects in development</p>
-                        <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
-                            <div class="bg-gradient-to-r from-violet-600 to-indigo-600 h-full rounded-full animate-pulse" style="width: 60%"></div>
-                        </div>
-                    </div>
-                </div>
-                <p class="text-sm text-slate-500 italic">Stay tuned for updates...</p>
-            </div>
-        </div>
     </div>
 </Layout>
 
@@ -140,17 +277,29 @@ const MAX_SKILLS_DISPLAYED = 3;
         grid-template-columns: repeat(4, 1fr);
         gap: 1.5rem;
         width: 100%;
+        align-items: start;
+    }
+
+    .hero-grid,
+    .pair-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+        grid-column: span 4;
+        align-items: stretch;
     }
 
     .bento-card {
         padding: 2rem;
         border-radius: 1.5rem;
         transition: transform 0.2s, box-shadow 0.2s;
-        min-height: 200px;
+        min-height: 160px;
+        position: relative;
+        overflow: hidden;
     }
 
     /* Only apply hover effect to cards with interactive content */
-    .bento-card:has(a):hover {
+    .bento-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 20px 40px rgba(139, 92, 246, 0.15);
     }
@@ -172,6 +321,11 @@ const MAX_SKILLS_DISPLAYED = 3;
             grid-template-columns: repeat(2, 1fr);
         }
 
+        .hero-grid,
+        .pair-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
         .col-span-2, .col-span-4 {
             grid-column: span 2;
         }
@@ -183,9 +337,15 @@ const MAX_SKILLS_DISPLAYED = 3;
             gap: 1rem;
         }
 
+        .hero-grid,
+        .pair-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
         .bento-card {
             padding: 1.5rem;
-            min-height: 150px;
+            min-height: 120px;
         }
 
         .col-span-2, .col-span-4 {
