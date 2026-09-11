@@ -7,7 +7,7 @@ export function Builds() {
       id="builds"
       file="BUILDS"
       title="Recent builds."
-      lede="What is currently running for Paramount Visas. Private where it needs to be."
+      lede="What is currently running for Paramount Visas."
     >
       <ol className="divide-y divide-line border-y border-line">
         {projects.map((project) => (

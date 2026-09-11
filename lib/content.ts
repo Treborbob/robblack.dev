@@ -60,7 +60,8 @@ export const intro = {
   headline: ["Shipping since 1999.", "Still on the latest version."],
   body: [
     "I'm a senior developer who spends most of his time making delivery smoother for other people: the tooling, pipelines and workflows that sit around the code, as much as the code itself.",
-    "The thread through everything is enablement. Tight feedback loops, fewer manual steps, and environments where a team can do good work without ceremony. That has included AI tooling since before it was fashionable, on the strict condition that it earns its place.",
+    "The thread through everything is enablement. Tight feedback loops, fewer manual steps, and environments where a team can do good work without ceremony.",
+    "These days I work AI-first. I have not written a line of production code in almost a year. I have designed the systems, reviewed a great deal of code, and briefed several models with the context, constraints and taste to produce what I would have written, sooner. The ideas are still mine. The typing is delegated.",
   ],
 };
 
@@ -83,7 +84,7 @@ export const focusAreas: FocusArea[] = [
   {
     title: "AI-assisted delivery",
     description:
-      "Prompt assets, AI feedback and workflow integration that make a team measurably more effective, without process theatre.",
+      "An AI-first workflow: multiple models, tailored context and constraints, and rigorous review, so the output is what I would have written, sooner and with fewer surprises.",
   },
 ];
 
@@ -98,6 +99,10 @@ export const releases: Release[] = [
       {
         kind: "changed",
         text: "Moved from studio development into business systems engineering, in a regulated environment where reliability and traceability matter more than novelty.",
+      },
+      {
+        kind: "changed",
+        text: "How the code gets written. AI-first, several models, and a lot of care over context, prompts and constraints. I direct and review; I rarely type. Nearly every line shipped this year was produced that way, and every line was read.",
       },
       {
         kind: "added",
@@ -531,9 +536,9 @@ export const releases: Release[] = [
 export const projects: Project[] = [
   {
     name: "Waypoint",
-    label: "Private business platform",
+    label: "Internal work-management platform",
     description:
-      "Internal business management platform for Paramount Visas: structured workflows, operational visibility and consistent delivery across the team. Built with a strong emphasis on documentation, release discipline and a dependable day-to-day developer workflow.",
+      "The system of record for the business: leads, enquiries, jobs and clients, with kanban boards, reminders and operational reporting on top of a large amount of bespoke case-management logic shaped around how the team actually works. Replaced Trello. Integrates with Vault so a job and its documents stay in step, with preview environments, release discipline and documentation to match.",
     stack: [
       "Next.js 16",
       "TypeScript",
@@ -545,9 +550,9 @@ export const projects: Project[] = [
   },
   {
     name: "Vault",
-    label: "Private secure document system",
+    label: "Applicant and document operations",
     description:
-      "Secure document management for applicant files: structured review workflows, magic-link uploads and Waypoint integration in a GDPR-conscious environment. Storage controls, auditability and operational safety for sensitive data.",
+      "Applicant records and their documents, organised properly: staff review queues, OCR-assisted processing of identity documents, an intake system that tracks what each application still needs, magic-link uploads so applicants never need an account, saved data views for staff, and appointment pack generation. GDPR built in: consent tracking, retention review and audited purge.",
     stack: [
       "Next.js 16",
       "TypeScript",
