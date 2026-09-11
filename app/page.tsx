@@ -5,6 +5,8 @@ import { Dependencies } from "@/components/dependencies";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
+import { Runtime } from "@/components/runtime";
+import { buildInfo } from "@/lib/build-info";
 
 export default function Page() {
   return (
@@ -21,6 +23,7 @@ export default function Page() {
         <Contributing />
       </main>
       <Footer />
+      <Runtime build={buildInfo()} />
     </>
   );
 }

@@ -1,4 +1,27 @@
+import { execSync } from "node:child_process";
+import { createRequire } from "node:module";
 import type { NextConfig } from "next";
+
+const require = createRequire(import.meta.url);
+
+function commitHash(): string {
+  const fromVercel = process.env.VERCEL_GIT_COMMIT_SHA;
+  if (fromVercel) return fromVercel.slice(0, 7);
+  try {
+    return execSync("git rev-parse --short HEAD", {
+      stdio: ["ignore", "pipe", "ignore"],
+    })
+      .toString()
+      .trim();
+  } catch {
+    return "unknown";
+  }
+}
+
+function siteVersion(): string {
+  const now = new Date();
+  return `${String(now.getUTCFullYear()).slice(-2)}.${String(now.getUTCMonth() + 1).padStart(2, "0")}.0`;
+}
 
 const isDev = process.env.NODE_ENV !== "production";
 
@@ -32,6 +55,15 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  env: {
+    NEXT_PUBLIC_SITE_VERSION: siteVersion(),
+    NEXT_PUBLIC_COMMIT: commitHash(),
+    NEXT_PUBLIC_BUILT_AT: new Date().toISOString(),
+    NEXT_PUBLIC_NEXT_VERSION: require("next/package.json").version as string,
+    NEXT_PUBLIC_NODE_VERSION: process.version,
+    NEXT_PUBLIC_REGION:
+      process.env.VERCEL_REGION ?? process.env.VERCEL_ENV ?? "local",
+  },
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },

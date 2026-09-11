@@ -6,7 +6,7 @@ Personal site for Rob Black. One page, written as a changelog.
 
 ## Stack
 
-- Next.js 16 (App Router, server components only, no client JS beyond Next's runtime)
+- Next.js 16 (App Router, server components; one small client script for the console boot log, the debug console trigger, and a release-index fallback for browsers without scroll-driven animations)
 - React 19, TypeScript strict
 - Tailwind CSS 4
 - Biome for lint and format
