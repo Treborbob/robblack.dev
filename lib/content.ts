@@ -22,6 +22,8 @@ export interface Release {
   /** Machine-readable start for the <time> element. */
   dateTime: string;
   changes: Change[];
+  /** Side ventures sit on a branch in the commit graph. */
+  branch?: boolean;
 }
 
 export interface Project {
@@ -219,6 +221,7 @@ export const releases: Release[] = [
     date: "July 2014",
     dateTime: "2014-07",
     org: "2DEVS",
+    branch: true,
     role: "Co-founder, evenings and weekends",
     changes: [
       {
@@ -419,6 +422,7 @@ export const releases: Release[] = [
     date: "February 2002",
     dateTime: "2002-02",
     org: "AfterTwelve.com",
+    branch: true,
     role: "Between jobs, on my own network",
     changes: [
       {
@@ -486,6 +490,7 @@ export const releases: Release[] = [
     date: "August 1999",
     dateTime: "1999-08",
     org: "Sale Computer Systems",
+    branch: true,
     role: "Co-founder and developer",
     changes: [
       {

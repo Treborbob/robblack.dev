@@ -13,7 +13,7 @@ const HALO_RADIUS = 180;
  * brightens in amber around the pointer. Reduced motion stops the cycling;
  * the pointer halo stays because the visitor is driving it.
  */
-export function Phosphor() {
+export function Phosphor({ fade = "bottom" }: { fade?: "bottom" | "top" }) {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -171,7 +171,7 @@ export function Phosphor() {
   return (
     <canvas
       ref={ref}
-      className="pointer-events-none absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom,black_45%,transparent_100%)]"
+      className={`pointer-events-none absolute inset-0 h-full w-full ${fade === "top" ? "[mask-image:linear-gradient(to_top,black_35%,transparent_100%)]" : "[mask-image:linear-gradient(to_bottom,black_45%,transparent_100%)]"}`}
     />
   );
 }

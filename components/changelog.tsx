@@ -1,4 +1,5 @@
 import { type Release, releases } from "@/lib/content";
+import { CommitGraph } from "./commit-graph";
 import { Section } from "./section";
 
 const kindLabel: Record<Release["changes"][number]["kind"], string> = {
@@ -24,9 +25,10 @@ export function Changelog() {
       lede="Calendar versioned. One rollback, and it was on purpose."
     >
       <div
-        className="changelog-scope grid gap-12 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-16"
+        className="changelog-scope relative grid gap-12 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-16"
         style={{ "--scope": scope } as React.CSSProperties}
       >
+        <CommitGraph />
         <nav aria-label="Release index" className="hidden lg:block">
           <ol className="mono sticky top-24 space-y-2 text-xs">
             {releases.map((release, i) => (
@@ -50,6 +52,7 @@ export function Changelog() {
               key={release.version}
               id={anchorFor(release)}
               className="release reveal scroll-mt-24"
+              data-branch={release.branch ? "true" : "false"}
               style={{ "--tl": `--r${i}` } as React.CSSProperties}
             >
               <article>
