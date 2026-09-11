@@ -206,15 +206,15 @@ export const releases: Release[] = [
     ],
   },
   {
-    version: versionFor(2015, 8),
-    date: "August 2015",
-    dateTime: "2015-08",
+    version: versionFor(2014, 7),
+    date: "July 2014",
+    dateTime: "2014-07",
     org: "2DEVS",
     role: "Co-founder, evenings and weekends",
     changes: [
       {
         kind: "added",
-        text: "A two-person freelance studio with a designer on frontend and UX and me on everything behind it, run around the day job.",
+        text: "A two-person freelance studio with a friend on design and frontend and me on everything behind it, run around the day job.",
       },
       {
         kind: "added",
@@ -226,7 +226,7 @@ export const releases: Release[] = [
       },
       {
         kind: "removed",
-        text: "2DEVS itself, wound down a few years later. Side hustles have lifecycles too.",
+        text: "2DEVS itself, dissolved in June 2025 after eleven years. Side hustles have lifecycles too.",
       },
     ],
   },
@@ -410,8 +410,12 @@ export const releases: Release[] = [
     date: "February 2002",
     dateTime: "2002-02",
     org: "AfterTwelve.com",
-    role: "Web Developer",
+    role: "Between jobs, on my own network",
     changes: [
+      {
+        kind: "changed",
+        text: "A year and a half back on the Sale Computer Systems sites full time, with AfterTwelve getting most of the attention.",
+      },
       {
         kind: "added",
         text: "A dating site built from scratch: bespoke CMS, membership system and card payments, back when that meant persuading a bank and an acquirer that the internet was real. They took some persuading.",
