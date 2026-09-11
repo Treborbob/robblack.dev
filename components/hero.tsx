@@ -6,12 +6,9 @@ export function Hero() {
   const version = currentVersion();
   const years = yearsShipping();
   return (
-    <section
-      id="top"
-      className="relative mx-auto max-w-6xl px-5 pt-16 pb-16 sm:px-8 sm:pt-24 sm:pb-20"
-    >
+    <section id="top" className="relative">
       <Phosphor />
-      <div className="relative">
+      <div className="relative mx-auto max-w-6xl px-5 pt-16 pb-16 sm:px-8 sm:pt-24 sm:pb-20">
         <p
           className="eyebrow rise"
           style={{ "--delay": "0ms" } as React.CSSProperties}
