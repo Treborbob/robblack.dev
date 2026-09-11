@@ -154,8 +154,12 @@ export function Runtime({ build }: { build: BuildInfo }) {
       typeof CSS !== "undefined" && CSS.supports("animation-timeline: view()");
     setCssTimelines(supported);
 
-    const ready = document.fonts?.ready ?? Promise.resolve();
-    ready.then(() => bootLog(build, supported));
+    const w = window as Window & { __rbBooted?: boolean };
+    if (!w.__rbBooted) {
+      w.__rbBooted = true;
+      const ready = document.fonts?.ready ?? Promise.resolve();
+      ready.then(() => bootLog(build, supported));
+    }
     installCommands(build, () => setOpen(true));
 
     let buffer: string[] = [];
