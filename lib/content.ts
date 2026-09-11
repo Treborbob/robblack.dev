@@ -61,7 +61,7 @@ export const intro = {
   body: [
     "I'm a senior developer who spends most of his time making delivery smoother for other people: the tooling, pipelines and workflows that sit around the code, as much as the code itself.",
     "The thread through everything is enablement. Tight feedback loops, fewer manual steps, and environments where a team can do good work without ceremony.",
-    "These days I work AI-first: several models, each briefed with the context, constraints and taste that {years} years of shipping gives you. I design the systems, set the standards and read every line. Most of the typing is delegated now. The judgement is not.",
+    "These days I work AI-first: several models, each briefed with the context, constraints and taste you get from {years} years of shipping. I design the systems, set the standards and read every line. Most of the typing is delegated now. The judgement is not.",
   ],
 };
 
@@ -538,7 +538,7 @@ export const projects: Project[] = [
     name: "Waypoint",
     label: "Internal work-management platform",
     description:
-      "The system of record for the business: leads, enquiries, jobs and clients, with kanban boards, reminders and reporting on top of case-management logic shaped around how the team actually works. Replaced Trello. Integrates with Vault so a job and its documents stay in step. Preview environments, release discipline and documentation to match.",
+      "The system of record for the business: leads, enquiries, jobs and clients, with kanban boards, reminders and reporting. Case-management logic shaped around how the team actually works. Replaced Trello. Integrates with Vault so a job and its documents stay in step. Preview environments, release discipline and documentation to match.",
     stack: [
       "Next.js 16",
       "TypeScript",
@@ -664,7 +664,7 @@ export const contributing = [
     title: "How I use AI",
     points: [
       "I know what good looks like, so I can tell when the output is not it",
-      "The model gets the context, constraints and standards; I keep the architecture, the review and the accountability",
+      "I brief the model; I own the architecture, the review and the result",
       "I keep up with what is possible, which is how I know what to ask for",
       "If it cannot be done with AI, it gets done without it",
     ],

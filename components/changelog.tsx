@@ -1,5 +1,4 @@
 import { type Release, releases } from "@/lib/content";
-import { RouletteWord } from "./roulette-trigger";
 import { Section } from "./section";
 
 const kindLabel: Record<Release["changes"][number]["kind"], string> = {
@@ -13,20 +12,6 @@ const kindLabel: Record<Release["changes"][number]["kind"], string> = {
 
 function anchorFor(release: Release) {
   return `v${release.version.replace(/[^0-9a-z]+/gi, "-")}`;
-}
-
-/** One word on the page is not what it seems. */
-function withEgg(text: string) {
-  const word = "roulette";
-  const at = text.indexOf(word);
-  if (at === -1) return text;
-  return (
-    <>
-      {text.slice(0, at)}
-      <RouletteWord>{word}</RouletteWord>
-      {text.slice(at + word.length)}
-    </>
-  );
 }
 
 export function Changelog() {
@@ -97,7 +82,7 @@ export function Changelog() {
                       <p
                         className={`max-w-[62ch] leading-relaxed ${change.kind === "note" ? "text-muted" : "text-fg/90"}`}
                       >
-                        {withEgg(change.text)}
+                        {change.text}
                       </p>
                     </li>
                   ))}

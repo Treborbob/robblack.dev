@@ -7,7 +7,7 @@
   --color-line-strong: #343b4b;
   --color-fg: #e7e4dc;
   --color-muted: #8e96a6;
-  --color-faint: #737b8a;
+  --color-faint: #7b8393;
   --color-accent: #f0b35b;
   --color-added: #7fc98a;
   --color-changed: #74b0ea;
@@ -233,6 +233,8 @@
   }
   @keyframes index-active {
     0%,
+    2.99%,
+    97.01%,
     100% {
       color: var(--color-muted);
     }

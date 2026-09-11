@@ -1,14 +1,6 @@
 import { focusAreas, intro, person } from "@/lib/content";
 import { currentVersion, yearsShipping } from "@/lib/version";
 
-function Sep() {
-  return (
-    <span aria-hidden="true" className="mr-3 hidden text-faint sm:inline">
-      ·
-    </span>
-  );
-}
-
 export function Hero() {
   const version = currentVersion();
   const years = yearsShipping();
@@ -40,7 +32,7 @@ export function Hero() {
       </h1>
 
       <dl
-        className="rise mono mt-10 flex flex-col items-start gap-y-2 text-sm text-muted sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3"
+        className="rise mono mt-10 flex flex-col items-start gap-y-2 text-sm text-muted sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 lg:gap-x-3 lg:[&>div+div]:before:mr-3 lg:[&>div+div]:before:text-faint lg:[&>div+div]:before:content-['·']"
         style={{ "--delay": "300ms" } as React.CSSProperties}
       >
         <div className="flex items-center gap-3 whitespace-nowrap">
@@ -56,19 +48,16 @@ export function Hero() {
           </dd>
         </div>
         <div className="whitespace-nowrap">
-          <Sep />
           <dt className="sr-only">Current role</dt>
           <dd className="inline text-fg">
             {person.currentRole} · {person.currentOrg}
           </dd>
         </div>
         <div className="whitespace-nowrap">
-          <Sep />
           <dt className="sr-only">Years shipping</dt>
           <dd className="inline">{years} years in production</dd>
         </div>
         <div className="whitespace-nowrap">
-          <Sep />
           <dt className="sr-only">Location</dt>
           <dd className="inline">{person.location}</dd>
         </div>

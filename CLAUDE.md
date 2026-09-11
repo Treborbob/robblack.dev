@@ -38,10 +38,6 @@ pnpm build
   `timeline-scope` on the changelog grid and a `view-timeline-name` per
   entry, animated in `globals.css`. No JavaScript, no active state in
   browsers without scroll-driven animations.
-- There is a hidden roulette table. The word "roulette" in the Switch Studios
-  2018 entry is a button (`components/roulette-trigger.tsx`); the game is
-  `components/roulette.tsx`, loaded on demand and portalled to `body`. It is
-  also reachable from the console via `roulette()`. Do not signpost it.
 - The Browser pane does not paint while hidden, so scroll-driven animations
   and `requestAnimationFrame` never advance there. To verify interactive
   behaviour, drive headless Chrome over the DevTools protocol from a small
