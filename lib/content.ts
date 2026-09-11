@@ -22,8 +22,6 @@ export interface Release {
   /** Machine-readable start for the <time> element. */
   dateTime: string;
   changes: Change[];
-  /** Shown when the entry spans a range of versions. */
-  rangeLabel?: string;
 }
 
 export interface Project {
@@ -60,7 +58,7 @@ export const intro = {
   headline: ["Shipping since 1999.", "Still on the latest version."],
   body: [
     "I'm a senior developer who spends most of his time making delivery smoother for other people: the tooling, pipelines and workflows that sit around the code, as much as the code itself.",
-    "The thread through everything is enablement. Tight feedback loops, fewer manual steps, and environments where a team can do good work without ceremony. Lately that includes getting AI tools to earn their place in real workflows rather than adding noise.",
+    "The thread through everything is enablement. Tight feedback loops, fewer manual steps, and environments where a team can do good work without ceremony. That has included AI tooling since before it was fashionable, on the strict condition that it earns its place.",
   ],
 };
 
@@ -92,7 +90,7 @@ export const releases: Release[] = [
     version: versionFor(2026, 1),
     date: "January 2026",
     dateTime: "2026-01",
-    org: "Paramount Visas Ltd",
+    org: "Paramount Visas",
     role: "Business Systems Engineer",
     changes: [
       {
@@ -151,11 +149,19 @@ export const releases: Release[] = [
     changes: [
       {
         kind: "added",
-        text: "TypeScript iGaming titles tuned for constrained mobile hardware, built on PixiJS and GSAP.",
+        text: "HTML5 casino table games for Microgaming, in TypeScript and PixiJS: roulette, blackjack, baccarat, sic bo and their many variants, tuned for constrained mobile hardware.",
       },
       {
-        kind: "fixed",
-        text: "QA feedback loops, through automated testing and keeping codebases lean enough to reason about.",
+        kind: "changed",
+        text: "Core engine architecture, planned with the technical architect and carried across the development and QA teams.",
+      },
+      {
+        kind: "added",
+        text: "Mentoring L1 developers, with code review as a standing responsibility rather than a favour.",
+      },
+      {
+        kind: "changed",
+        text: "Progress, complications and timeline changes taken to stakeholders in plain English, before they became surprises.",
       },
       {
         kind: "note",
@@ -185,33 +191,81 @@ export const releases: Release[] = [
     changes: [
       {
         kind: "added",
-        text: ".NET systems for the energy industry: smart meter management, workforce tools and backend integrations.",
+        text: ".NET systems for gas, electricity and water utilities: smart meter management, workforce tools and backend integrations.",
       },
       {
         kind: "added",
-        text: "A small neural network in Python, written by hand to understand how the thing actually worked. Flagged experimental. Flag never removed.",
+        text: "Continuous integration and delivery with unit and automated UI tests, inside an ISO 27001 accredited company. First proper taste of a tightly regulated industry.",
+      },
+      {
+        kind: "fixed",
+        text: "Reported bugs reproduced and isolated with the support team before a work item was raised. Debugging as a team sport.",
       },
     ],
   },
   {
-    version: `${versionFor(2000, 1)} to ${versionFor(2016, 8)}`,
-    rangeLabel: "2.x to 17.x",
-    date: "2000 to 2016",
-    dateTime: "2000",
-    org: "Various",
-    role: "Web, applications and interactive products",
+    version: versionFor(2013, 1),
+    date: "January 2013",
+    dateTime: "2013-01",
+    org: "kwiboo",
+    role: "Developer",
     changes: [
       {
         kind: "added",
-        text: "Breadth. Different stacks, teams and commercial contexts, which is why moving between product work, platform concerns and operational systems now feels normal.",
+        text: "Distributed systems for a large online pharmacy, plus work for Sony, Mitsubishi Electric, Sega and Xchanging. Eighty percent development, twenty percent keeping it all running.",
+      },
+      {
+        kind: "added",
+        text: "Zero-downtime deploys to live systems with immediate rollback on failure. The habit stuck.",
+      },
+      {
+        kind: "added",
+        text: "KnockoutJS and MVVM, SignalR, Windows services, message queues, AngularJS, Web API, single-page apps, PhoneGap, SASS and LESS. Roughly everything, roughly at once.",
       },
       {
         kind: "changed",
-        text: "Table layouts to CSS. Full page reloads to AJAX. XML to JSON. LESS to SCSS. Then React and Angular arrived and changed the question entirely.",
+        text: "Client specifications broken down into costs and timelines, then delivered on them. Self-managed from the first sprint.",
       },
       {
         kind: "deprecated",
-        text: "jQuery. Still fond of it.",
+        text: "jQuery, in favour of Knockout and then Angular. Still fond of it.",
+      },
+      {
+        kind: "note",
+        text: "Microsoft Certified Solutions Developer for web applications, 2014. Renewed twice, then quietly retired along with the acronym.",
+      },
+    ],
+  },
+  {
+    version: versionFor(2010, 10),
+    date: "October 2010",
+    dateTime: "2010-10",
+    org: "Rade Digital",
+    role: "Senior Web Developer",
+    changes: [
+      {
+        kind: "changed",
+        text: "Rolled back to Rade, in a more senior role. The only rollback on this page, and it was deliberate.",
+      },
+      {
+        kind: "added",
+        text: "HTML5, CSS3 and responsive design, championed across client e-commerce sites while IE7 was still on the support list.",
+      },
+      {
+        kind: "added",
+        text: "QA testing, source control and bug tracking as standard practice. The first process I ever introduced to a team, and the start of a habit.",
+      },
+      {
+        kind: "added",
+        text: "Git. Just started using it, according to the 2012 CV.",
+      },
+      {
+        kind: "fixed",
+        text: "A locked-down core platform, by reshaping its pages with jQuery and AJAX after they had rendered. Not proud. Very effective.",
+      },
+      {
+        kind: "fixed",
+        text: "Christmas peak load for e-commerce clients, with load testing and a lot of profiling.",
       },
       {
         kind: "removed",
@@ -220,15 +274,158 @@ export const releases: Release[] = [
     ],
   },
   {
-    version: "1.0.0",
-    date: "1999",
-    dateTime: "1999",
+    version: versionFor(2009, 10),
+    date: "October 2009",
+    dateTime: "2009-10",
+    org: "Student Gems",
+    role: "Technical Manager",
+    changes: [
+      {
+        kind: "changed",
+        text: "From long-time freelancer to head of everything technical, after the company took angel investment.",
+      },
+      {
+        kind: "added",
+        text: "Servers, email, firewall, hosting, contractors and all new development. One person, a lot of hats.",
+      },
+      {
+        kind: "added",
+        text: "A content-managed bulk email system on HTML and plain-text templates with a dynamic SQL merge. A mail merge, in 2009, by hand. It worked.",
+      },
+      {
+        kind: "changed",
+        text: "Classic ASP forms rebuilt as jQuery and AJAX wizards with remote geocoding. Most of the rest rewritten in valid XHTML and CSS. Tables were for data again.",
+      },
+    ],
+  },
+  {
+    version: versionFor(2006, 9),
+    date: "September 2006",
+    dateTime: "2006-09",
+    org: "Rade New Media",
+    role: "Web Developer",
+    changes: [
+      {
+        kind: "added",
+        text: "E-commerce sites on the RadeTrade platform for Multiyork, Rapid Electronics, Hawkin's Bazaar and the World Land Trust, among others. PSD in, working shop out.",
+      },
+      {
+        kind: "added",
+        text: "Payment gateways: SagePay, PayPal, WorldPay and Protx. Fulfilment and CRM integrations with Maginus and Khaos Control.",
+      },
+      {
+        kind: "changed",
+        text: "More ASP.NET, co-writing an intranet for the largest e-commerce customer.",
+      },
+    ],
+  },
+  {
+    version: versionFor(2004, 4),
+    date: "April 2004",
+    dateTime: "2004-04",
+    org: "Arcaysis",
+    role: "Developer",
+    changes: [
+      {
+        kind: "added",
+        text: "Core work on a content management and e-commerce engine that was mostly SQL: stored procedures, triggers, transactions and metadata, running shops doing thousands of orders a day.",
+      },
+      {
+        kind: "changed",
+        text: "Learned relational design and database performance properly, in T-SQL, the way you only learn it when the orders are real.",
+      },
+      {
+        kind: "note",
+        text: "Contracted out to Rade New Media in 2006 to teach their team the system. Ended up staying.",
+      },
+    ],
+  },
+  {
+    version: versionFor(2003, 10),
+    date: "October 2003",
+    dateTime: "2003-10",
+    org: "2Cs",
+    role: "Web Developer",
+    changes: [
+      {
+        kind: "added",
+        text: "Dozens of dynamic sites in Classic ASP, SQL and early ASP.NET, in a team of three developers and six designers. Accessibility guidelines on most of them.",
+      },
+    ],
+  },
+  {
+    version: versionFor(2003, 7),
+    date: "July 2003",
+    dateTime: "2003-07",
+    org: "DKNI",
+    role: "Software Developer",
+    changes: [
+      {
+        kind: "added",
+        text: "Access front-ends on SQL Server, and VBA that imported spreadsheets, converted them to CSV and FTP'd them elsewhere. Linked servers and distributed transactions included.",
+      },
+      {
+        kind: "note",
+        text: "A patch release. The company was acquired the following year.",
+      },
+    ],
+  },
+  {
+    version: versionFor(2002, 2),
+    date: "February 2002",
+    dateTime: "2002-02",
+    org: "AfterTwelve.com",
+    role: "Web Developer",
+    changes: [
+      {
+        kind: "added",
+        text: "A community matchmaking site built from scratch: bespoke CMS, membership system and secure payment processing.",
+      },
+      {
+        kind: "deprecated",
+        text: "AfterTwelve.com itself, closed by its owners in 2004. Not a code issue.",
+      },
+    ],
+  },
+  {
+    version: versionFor(2001, 10),
+    date: "October 2001",
+    dateTime: "2001-10",
+    org: "NHS Direct",
+    role: "Web Developer",
+    changes: [
+      {
+        kind: "changed",
+        text: "A static HTML site converted to dynamic ASP with SQL Server behind it.",
+      },
+      {
+        kind: "added",
+        text: "W3C accessibility standards, followed at all times. The NHS insisted, and it stuck.",
+      },
+    ],
+  },
+  {
+    version: versionFor(2000, 10),
+    date: "October 2000",
+    dateTime: "2000-10",
     org: "Mirago",
     role: "Initial release",
     changes: [
       {
         kind: "added",
-        text: "Commercial web development, while the industry was still finding its shape. Everything since has been an upgrade.",
+        text: "The only full-time web developer on a very busy UK search engine.",
+      },
+      {
+        kind: "changed",
+        text: "Junior web developer to web developer in week three.",
+      },
+      {
+        kind: "changed",
+        text: "The entire site, from PerlScript to VBScript. It was 2000. It made sense at the time.",
+      },
+      {
+        kind: "added",
+        text: "Hardware and software rollouts alongside the sysadmins when the site needed it. Everyone did everything.",
       },
       {
         kind: "note",

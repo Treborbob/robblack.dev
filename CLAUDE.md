@@ -13,7 +13,7 @@ something genuinely needs interaction.
 
 - Top-level `app/`, `components/`, `lib/`, `public/`. No `src/`.
 - All copy and data live in `lib/content.ts`. Do not hardcode content in components.
-- Versions come from `lib/version.ts`: major = years since 1999, minor = month.
+- Versions come from `lib/version.ts`: calendar versioning, YY.MM.0.
 - UK English. Dry, plain wording. Jokes are allowed if they are short.
 - Design tokens are in `app/globals.css` under `@theme`. Dark only, by choice.
 - Respect `prefers-reduced-motion`. Keep the page fully usable with no JS.

@@ -19,7 +19,7 @@ No database, no auth, no analytics, no cookies.
 
 Everything on the page comes from `lib/content.ts`. Edit that file to update
 roles, releases, projects or contact details. Version numbers follow the
-scheme in `lib/version.ts`: major is years since 1999, minor is the month.
+scheme in `lib/version.ts`: calendar versioning, YY.MM.0.
 
 ## Development
 

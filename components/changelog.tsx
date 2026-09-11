@@ -11,7 +11,7 @@ const kindLabel: Record<Release["changes"][number]["kind"], string> = {
 };
 
 function anchorFor(release: Release) {
-  return `v${(release.rangeLabel ?? release.version).replace(/[^0-9a-z]+/gi, "-")}`;
+  return `v${(release.version).replace(/[^0-9a-z]+/gi, "-")}`;
 }
 
 export function Changelog() {
@@ -20,9 +20,9 @@ export function Changelog() {
       id="changelog"
       file="CHANGELOG.md"
       title="Every release, newest first."
-      lede="Major version is years since 1999. Minor is the month. Patches are unreleased."
+      lede="Calendar versioned. One rollback, and it was on purpose."
     >
-      <div className="grid gap-12 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-16">
+      <div className="grid gap-12 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-16">
         <nav aria-label="Release index" className="hidden lg:block">
           <ol className="mono sticky top-24 space-y-2 text-xs">
             {releases.map((release) => (
@@ -32,7 +32,7 @@ export function Changelog() {
                   className="group flex items-baseline gap-3 text-muted transition-colors hover:text-fg"
                 >
                   <span className="w-[6rem] shrink-0 text-accent/80 group-hover:text-accent">
-                    v{release.rangeLabel ?? release.version}
+                    v{release.version}
                   </span>
                   <span className="truncate">{release.org}</span>
                 </a>
@@ -51,7 +51,7 @@ export function Changelog() {
               <article>
                 <header className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                   <h3 className="mono text-xl font-medium text-accent">
-                    v{release.rangeLabel ?? release.version}
+                    v{release.version}
                   </h3>
                   <time
                     dateTime={release.dateTime}
