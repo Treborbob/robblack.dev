@@ -11,13 +11,24 @@ interface Line {
   id: number;
   text: string;
   tone?: "dim" | "ok" | "warn" | "accent";
+  node?: React.ReactNode;
 }
 
-interface SysInfo {
-  [key: string]: string;
-}
+type SysInfo = Record<string, string>;
 
 const PROMPT = "guest@robblack.dev:~$";
+const CODENAME = "Warty Warthog";
+
+/** Console state outlives the component, so closing and reopening resumes. */
+const session = {
+  lines: [] as Line[],
+  history: [] as string[],
+  booted: false,
+  toggles: { wire: false, grid: false, band: false } as Record<Toggle, boolean>,
+  matrix: false,
+  openedAt: 0,
+  nextId: 1,
+};
 
 function pad(n: number) {
   return n.toFixed(6).padStart(12, " ");
@@ -48,8 +59,17 @@ function collect(build: BuildInfo, cssTimelines: boolean): SysInfo {
   let gpu = "unknown";
   try {
     const gl = document.createElement("canvas").getContext("webgl");
-    const ext = gl?.getExtension("WEBGL_debug_renderer_info");
-    if (gl && ext) gpu = String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL));
+    if (gl) {
+      // Firefox exposes the real renderer via RENDERER and deprecates the
+      // extension; Chromium still needs the extension for the unmasked name.
+      const firefox = /firefox/i.test(navigator.userAgent);
+      const ext = firefox ? null : gl.getExtension("WEBGL_debug_renderer_info");
+      gpu = String(
+        ext
+          ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
+          : gl.getParameter(gl.RENDERER),
+      );
+    }
   } catch {
     // no webgl, no gpu string
   }
@@ -102,7 +122,9 @@ function collect(build: BuildInfo, cssTimelines: boolean): SysInfo {
     browser: `${browser} on ${platform}`,
     locale: `${navigator.languages?.join(", ") || navigator.language} · ${tz} (UTC${offset >= 0 ? "+" : ""}${offset})`,
     display: `${screen.width}x${screen.height} @${window.devicePixelRatio}x, ${screen.colorDepth}-bit, viewport ${window.innerWidth}x${window.innerHeight}`,
-    cpu: `${navigator.hardwareConcurrency ?? "?"} cores, ${nav.deviceMemory ? `${nav.deviceMemory} GB` : "memory undisclosed"}`,
+    resolution: `${window.innerWidth}x${window.innerHeight} @${window.devicePixelRatio}x`,
+    cpu: `${navigator.hardwareConcurrency ?? "?"} cores`,
+    memory: nav.deviceMemory ? `${nav.deviceMemory} GB` : "undisclosed",
     gpu,
     net: `${nav.connection?.effectiveType ?? "unknown"}${nav.connection?.rtt != null ? `, rtt ${nav.connection.rtt}ms` : ""}${nav.connection?.downlink != null ? `, ${nav.connection.downlink} Mbps` : ""}, ${navigator.onLine ? "online" : "offline"}`,
     touch: `${navigator.maxTouchPoints} touch points`,
@@ -111,7 +133,12 @@ function collect(build: BuildInfo, cssTimelines: boolean): SysInfo {
     index: cssTimelines
       ? "scroll-driven timelines supported"
       : "scroll-driven timelines unsupported, js fallback armed",
-    page: `${document.querySelectorAll(".release").length} releases, ${document.querySelectorAll(".kind").length} changes, ${(document.querySelector("main")?.innerText ?? "").trim().split(/\s+/).length} words`,
+    releases: String(document.querySelectorAll(".release").length),
+    changes: String(document.querySelectorAll(".kind").length),
+    words: String(
+      (document.querySelector("main")?.innerText ?? "").trim().split(/\s+/)
+        .length,
+    ),
     motion: window.matchMedia("(prefers-reduced-motion: reduce)").matches
       ? "reduce"
       : "no-preference",
@@ -125,23 +152,23 @@ function collect(build: BuildInfo, cssTimelines: boolean): SysInfo {
 
 function bootScript(build: BuildInfo, info: SysInfo): Line[] {
   let t = 0;
-  let id = 0;
   const k = (text: string, tone?: Line["tone"]) => {
     t += 0.0004 + Math.random() * 0.0011;
-    return { id: id++, text: `[${pad(t)}] ${text}`, tone };
+    return { id: session.nextId++, text: `[${pad(t)}] ${text}`, tone };
   };
   const ok = (text: string) => ({
-    id: id++,
+    id: session.nextId++,
     text: `[  OK  ] ${text}`,
     tone: "ok" as const,
   });
+  const plain = (text: string, tone?: Line["tone"]) => ({
+    id: session.nextId++,
+    text,
+    tone,
+  });
   return [
-    {
-      id: id++,
-      text: `robblack.dev bootloader v${build.version}`,
-      tone: "accent",
-    },
-    { id: id++, text: "" },
+    plain(`robblack.dev bootloader v${build.version}`, "accent"),
+    plain(""),
     k(`commit ${info.commit}, built ${info.built}, region ${info.region}`),
     k(info.runtime),
     k(`host ${info.host}`),
@@ -150,28 +177,77 @@ function bootScript(build: BuildInfo, info: SysInfo): Line[] {
     k(`ua ${info.browser}`),
     k(`locale ${info.locale}`),
     k(`display ${info.display}`),
-    k(`cpu ${info.cpu}`),
+    k(`cpu ${info.cpu}, memory ${info.memory}`),
     k(`gpu ${info.gpu}`),
     k(`net ${info.net}`),
     k(`input ${info.touch}`),
     k(`storage ${info.storage}`),
     k(`fonts ${info.fonts}`),
     k(`index ${info.index}`),
-    k(`page ${info.page}`),
+    k(
+      `page ${info.releases} releases, ${info.changes} changes, ${info.words} words`,
+    ),
     k(`motion prefers-reduced-motion: ${info.motion}, scheme ${info.scheme}`),
     k(`referrer ${info.referrer}`),
     k(`ip ${info.ip}`, "dim"),
     ok("Mounted /changelog."),
     ok("Started Release Index Service."),
     ok("Reached target robblack.dev."),
-    { id: id++, text: "" },
-    {
-      id: id++,
-      text: "type help for commands. esc or ` to close.",
-      tone: "dim",
-    },
+    plain(""),
+    plain("type help for commands. esc or ` to close.", "dim"),
   ];
 }
+
+const LOGO = [
+  " ██████╗ ██████╗ ",
+  " ██╔══██╗██╔══██╗",
+  " ██████╔╝██████╔╝",
+  " ██╔══██╗██╔══██╗",
+  " ██║  ██║██████╔╝",
+  " ╚═╝  ╚═╝╚═════╝ ",
+];
+
+const TRAIN = [
+  "      ====        ________                ___________ ",
+  "  _D _|  |_______/        \\__I_I_____===__|_________| ",
+  "   |(_)---  |   H\\________/ |   |        =|___ ___|   ",
+  "   /     |  |   H  |  |     |   |         ||_| |_||   ",
+  "  |      |  |   H  |__--------------------| [___] |   ",
+  "  | ________|___H__/__|_____/[][]~\\_______|       |   ",
+  "  |/ |   |-----------I_____I [][] []  D   |=======|__ ",
+  "__/ =| o |=-~~\\  /~~\\  /~~\\  /~~\\ ____Y___________|__ ",
+  " |/-=|___|=    ||    ||    ||    |_____/~\\___/        ",
+  "  \\_/      \\O=====O=====O=====O_/      \\_/            ",
+];
+
+const DISTROS = [
+  ["1997", "Red Hat Linux 4", "first install. a lot of floppies."],
+  ["1998", "ZipSlack", "Slackware on a 100 MB Zip disk. it fit. just."],
+  [
+    "2000",
+    "Mandrake 7",
+    "KDE, a graphical installer, and no idea what to do next.",
+  ],
+  ["2003", "SUSE", "YaST was magic. the box was enormous."],
+  [
+    "2004",
+    "Ubuntu 4.10 Warty Warthog",
+    "the first one. daily driven for a while.",
+  ],
+  ["2005", "Ubuntu 5.04 Hoary Hedgehog", "the one that stuck in memory."],
+];
+
+const FORTUNES = [
+  "It was 2000. It made sense at the time.",
+  "Initial commit. No tests. We were young.",
+  "Someone has to standardise the laptops.",
+  "The syndication partner made more.",
+  "Not proud. Very effective.",
+  "Git. Just started using it.",
+  "Side hustles have lifecycles too.",
+  "The judgement is not.",
+  "Start from yes, then work out how, then say what it will cost.",
+];
 
 function useMatrix(
   canvasRef: React.RefObject<HTMLCanvasElement | null>,
@@ -193,8 +269,12 @@ function useMatrix(
     const drops = Array.from({ length: cols }, () => Math.random() * -50);
     const glyphs = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉ0123456789ABCDEF<>/{}[]=+-*";
     let raf = 0;
+    let frame = 0;
     const draw = () => {
-      ctx.fillStyle = "rgba(15, 18, 25, 0.12)";
+      raf = requestAnimationFrame(draw);
+      frame += 1;
+      if (frame % 3 !== 0) return; // about 20 steps a second, not 60
+      ctx.fillStyle = "rgba(15, 18, 25, 0.16)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.font = `${size}px ui-monospace, Menlo, monospace`;
       for (let i = 0; i < cols; i++) {
@@ -205,7 +285,6 @@ function useMatrix(
           drops[i] = 0;
         drops[i] += 1;
       }
-      raf = requestAnimationFrame(draw);
     };
     raf = requestAnimationFrame(draw);
     window.addEventListener("resize", resize);
@@ -226,19 +305,16 @@ export function Terminal({
   cssTimelines: boolean;
   onClose: () => void;
 }) {
-  const [lines, setLines] = useState<Line[]>([]);
+  const [lines, setLines] = useState<Line[]>(session.lines);
   const [partial, setPartial] = useState("");
-  const [booted, setBooted] = useState(false);
+  const [booted, setBooted] = useState(session.booted);
   const [input, setInput] = useState("");
-  const [history, setHistory] = useState<string[]>([]);
+  const [history, setHistory] = useState<string[]>(session.history);
   const [cursor, setCursor] = useState(-1);
-  const [toggles, setToggles] = useState<Record<Toggle, boolean>>({
-    wire: false,
-    grid: false,
-    band: false,
-  });
-  const [matrix, setMatrix] = useState(false);
+  const [toggles, setToggles] = useState(session.toggles);
+  const [matrix, setMatrix] = useState(session.matrix);
   const [live, setLive] = useState<Record<string, string>>({});
+  const [bootKey, setBootKey] = useState(0);
 
   const infoRef = useRef<SysInfo | null>(null);
   const skipRef = useRef(false);
@@ -246,19 +322,40 @@ export function Terminal({
   const inputRef = useRef<HTMLInputElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const shellRef = useRef<HTMLElement>(null);
-  const idRef = useRef(1000);
-  const openedAt = useRef(performance.now());
+  const restoredRef = useRef(false);
 
   useMatrix(canvasRef, matrix);
 
-  const print = useCallback((text: string, tone?: Line["tone"]) => {
-    setLines((prev) => [...prev, { id: idRef.current++, text, tone }]);
-  }, []);
+  // Keep the module session in step so the next open resumes here.
+  useEffect(() => {
+    session.lines = lines;
+    session.history = history;
+    session.booted = booted;
+    session.toggles = toggles;
+    session.matrix = matrix;
+  }, [lines, history, booted, toggles, matrix]);
 
-  // Boot sequence, typed out. Any key skips to the end.
+  const print = useCallback(
+    (text: string, tone?: Line["tone"], node?: React.ReactNode) => {
+      setLines((prev) => [...prev, { id: session.nextId++, text, tone, node }]);
+    },
+    [],
+  );
+
+  // Boot once per session. Any key skips to the end. `reboot` runs it again.
   useEffect(() => {
     const info = collect(build, cssTimelines);
     infoRef.current = info;
+    if (session.booted && bootKey === 0) {
+      if (!session.openedAt) session.openedAt = performance.now();
+      if (!restoredRef.current) {
+        restoredRef.current = true;
+        print("session restored. type help for commands.", "dim");
+      }
+      return;
+    }
+    session.openedAt = performance.now();
+    skipRef.current = false;
     const script = bootScript(build, info);
     const reduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -293,7 +390,7 @@ export function Terminal({
     return () => {
       cancelled = true;
     };
-  }, [build, cssTimelines]);
+  }, [build, cssTimelines, bootKey, print]);
 
   useEffect(() => {
     if (booted) inputRef.current?.focus();
@@ -335,7 +432,7 @@ export function Terminal({
           break;
         }
       }
-      const up = (performance.now() - openedAt.current) / 1000;
+      const up = (performance.now() - session.openedAt) / 1000;
       const max = document.documentElement.scrollHeight - window.innerHeight;
       setLive({
         clock: new Date().toISOString().slice(11, 19),
@@ -359,6 +456,8 @@ export function Terminal({
         return;
       }
       if (!booted) {
+        // The Enter that submitted `reboot` is still bubbling; ignore it.
+        if (e.target instanceof HTMLInputElement || e.key === "Enter") return;
         skipRef.current = true;
         return;
       }
@@ -377,8 +476,6 @@ export function Terminal({
       window.clearInterval(interval);
       window.removeEventListener("scroll", sample);
       window.removeEventListener("keydown", onKey);
-      for (const t of TOGGLES)
-        document.documentElement.removeAttribute(`data-debug-${t}`);
     };
   }, [booted, cssTimelines, onClose]);
 
@@ -389,6 +486,82 @@ export function Terminal({
     print(`${id} ${next ? "on" : "off"}`, "ok");
   };
 
+  const uptimeText = () => {
+    const up = (performance.now() - session.openedAt) / 1000;
+    return `${Math.floor(up / 60)}m ${String(Math.floor(up % 60)).padStart(2, "0")}s`;
+  };
+
+  const neofetch = () => {
+    const info = infoRef.current ?? {};
+    const rows: [string, string][] = [
+      ["OS", `robblack.dev ${build.version.slice(0, 5)} "${CODENAME}"`],
+      [
+        "Host",
+        `${info.region === "local" ? "localhost" : "Vercel"} (${info.commit})`,
+      ],
+      ["Kernel", `next ${build.next}`],
+      ["Uptime", uptimeText()],
+      ["Packages", `${info.releases} releases, ${info.changes} changes`],
+      ["Shell", "guest (backtick)"],
+      ["Resolution", info.resolution ?? "n/a"],
+      ["DE", "Bricolage Grotesque"],
+      ["WM", "Tailwind 4"],
+      ["Terminal", `${info.browser ?? "unknown"}`],
+      ["CPU", info.cpu ?? "n/a"],
+      ["GPU", info.gpu ?? "n/a"],
+      ["Memory", info.memory ?? "n/a"],
+    ];
+    const bars = [
+      "#0f1219",
+      "#e27878",
+      "#7fc98a",
+      "#e7a94f",
+      "#74b0ea",
+      "#b9a0f2",
+      "#8e96a6",
+      "#e7e4dc",
+    ];
+    const text = [
+      `guest@robblack.dev`,
+      ...rows.map(([k, v]) => `${k}: ${v}`),
+    ].join("\n");
+    print(
+      text,
+      undefined,
+      <div className="flex gap-6">
+        <pre className="text-accent leading-[1.2]">{LOGO.join("\n")}</pre>
+        <div>
+          <div className="text-accent">guest@robblack.dev</div>
+          <div className="text-added/50">{"-".repeat(18)}</div>
+          {rows.map(([k, v]) => (
+            <div key={k}>
+              <span className="text-accent">{k}</span>
+              <span className="text-added/85">: {v}</span>
+            </div>
+          ))}
+          <div className="mt-2 flex">
+            {bars.map((c) => (
+              <span
+                key={c}
+                className="inline-block h-[1.2em] w-[3ch]"
+                style={{ background: c }}
+              />
+            ))}
+          </div>
+          <div className="flex opacity-60">
+            {bars.map((c) => (
+              <span
+                key={c}
+                className="inline-block h-[1.2em] w-[3ch]"
+                style={{ background: c }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>,
+    );
+  };
+
   const run = (raw: string) => {
     const cmd = raw.trim();
     print(`${PROMPT} ${cmd}`, "accent");
@@ -397,10 +570,12 @@ export function Terminal({
     setCursor(-1);
     const [name, ...args] = cmd.split(/\s+/);
     const arg = args[0]?.toLowerCase();
+    const rest = args.join(" ");
     const flag = arg === "on" ? true : arg === "off" ? false : undefined;
     const info = infoRef.current ?? {};
+    const lower = name.toLowerCase();
 
-    switch (name.toLowerCase()) {
+    switch (lower) {
       case "help":
       case "?":
         for (const l of [
@@ -415,6 +590,7 @@ export function Terminal({
           "cat changelog   every release, newest first",
           "version         current version",
           "uptime          how long the console has been open",
+          "reboot          run the boot sequence again",
           "clear           clear the screen",
           "exit            close the console",
         ])
@@ -435,34 +611,27 @@ export function Terminal({
           print("reduced motion is on. the matrix respects that.", "dim");
           break;
         }
-        setMatrix((m) => {
-          print(m ? "there is no spoon." : "wake up.", "dim");
-          return !m;
-        });
+        print(matrix ? "there is no spoon." : "wake up.", "dim");
+        setMatrix((m) => !m);
         break;
       case "neofetch":
+      case "screenfetch":
       case "sysinfo":
-        print(`guest@${location.host}`, "accent");
-        print("-".repeat(24), "dim");
-        for (const key of [
-          "commit",
-          "built",
-          "region",
-          "runtime",
-          "host",
-          "browser",
-          "locale",
-          "display",
-          "cpu",
-          "gpu",
-          "net",
-          "storage",
-          "index",
-          "page",
-        ])
-          print(`${key.padEnd(9)} ${info[key] ?? "n/a"}`);
+        neofetch();
         break;
       case "ls":
+        if (
+          args.includes("-la") ||
+          args.includes("-l") ||
+          args.includes("-a")
+        ) {
+          print("drwxr-xr-x  guest  guest  changelog");
+          print("drwxr-xr-x  guest  guest  builds");
+          print("drwxr-xr-x  guest  guest  dependencies");
+          print("drwxr-xr-x  guest  guest  contributing");
+          print("-rw-------  rob    rob    .plans", "dim");
+          break;
+        }
         for (const s of Array.from(
           document.querySelectorAll<HTMLElement>("main section[id]"),
         ))
@@ -471,7 +640,12 @@ export function Terminal({
           );
         break;
       case "cd": {
-        const target = document.getElementById(arg ?? "");
+        if (!arg || arg === "~" || arg === "..") {
+          window.scrollTo({ top: 0, behavior: "instant" });
+          print("/");
+          break;
+        }
+        const target = document.getElementById(arg);
         if (target) {
           const below = (shellRef.current?.offsetHeight ?? 0) + 16;
           window.scrollTo({
@@ -479,28 +653,73 @@ export function Terminal({
             behavior: "instant",
           });
           print(`/${arg}`);
-        } else print(`cd: no such section: ${arg ?? ""}`, "warn");
+        } else print(`cd: no such section: ${arg}`, "warn");
         break;
       }
+      case "pwd":
+        print("/home/guest");
+        break;
       case "cat":
         if (/changelog/i.test(arg ?? "")) {
           for (const el of Array.from(
             document.querySelectorAll<HTMLElement>(".release"),
-          )) {
+          ))
             print(
               `${(el.querySelector("h3")?.textContent ?? "").padEnd(14)} ${el.querySelector("p")?.textContent ?? ""}`,
             );
-          }
-        } else print(`cat: ${arg ?? ""}: no such file`, "warn");
+        } else if (/passwd|shadow/i.test(arg ?? ""))
+          print("cat: nice try.", "warn");
+        else if (/\.plans?/i.test(arg ?? ""))
+          print("cat: .plans: permission denied. ask rob.", "warn");
+        else print(`cat: ${arg ?? ""}: no such file`, "warn");
+        break;
+      case "git":
+        if (arg === "log") {
+          for (const el of Array.from(
+            document.querySelectorAll<HTMLElement>(".release"),
+          ))
+            print(
+              `${(el.querySelector("h3")?.textContent ?? "").padEnd(14)} ${el.querySelector("p")?.textContent ?? ""}`,
+            );
+        } else if (arg === "status") {
+          print("On branch main");
+          print("nothing to commit, working tree clean. for once.");
+        } else if (arg === "blame") print("rob. always rob.");
+        else print(`git ${arg ?? ""}: try log, status or blame.`, "dim");
         break;
       case "version":
         print(`v${build.version} (${build.commit})`);
         break;
+      case "uname":
+        print(
+          `robblack.dev ${build.version}-vercel #${build.commit} SMP ${info.built ?? ""} x86_64 GNU/Next`,
+        );
+        break;
       case "uptime":
-        print(live.uptime ?? "0s");
+        print(uptimeText());
+        break;
+      case "date":
+        print(new Date().toString());
         break;
       case "whoami":
         print("guest");
+        break;
+      case "who":
+      case "w":
+        print("guest    tty1    now   (you)");
+        print("rob      tty0    1998  (still here)");
+        break;
+      case "echo":
+        print(rest);
+        break;
+      case "history": {
+        const past = history.slice().reverse();
+        for (let i = 0; i < past.length; i++)
+          print(`${String(i + 1).padStart(4)}  ${past[i]}`);
+        break;
+      }
+      case "man":
+        print(`No manual entry for ${arg ?? "man"}. try help.`, "dim");
         break;
       case "sudo":
         print(
@@ -508,8 +727,144 @@ export function Terminal({
           "warn",
         );
         break;
+      case "su":
+        print(
+          "su: authentication failure. it was never going to be 'password'.",
+          "warn",
+        );
+        break;
       case "rm":
-        print("no.", "warn");
+        print(/-rf/.test(rest) ? "no. and I saw that." : "no.", "warn");
+        break;
+      case "vim":
+      case "vi":
+        print("you would never leave. declined.", "warn");
+        break;
+      case "emacs":
+        print("not enough memory. or fingers.", "warn");
+        break;
+      case "nano":
+        print("fine. but not here.", "dim");
+        break;
+      case "top":
+      case "htop":
+      case "ps":
+        print("  PID  %CPU  %MEM  COMMAND");
+        print("    1   0.1   1.2  next");
+        print("    2   0.4   3.0  react");
+        print("    3   0.0   0.4  tailwind");
+        print("    4   2.1   0.9  changelog");
+        print("    5   0.0   0.0  jquery  <defunct>", "dim");
+        break;
+      case "df":
+        navigator.storage?.estimate?.().then((e) => {
+          const used = ((e.usage ?? 0) / 1024 / 1024).toFixed(1);
+          const quota = ((e.quota ?? 0) / 1024 / 1024 / 1024).toFixed(1);
+          print(`Filesystem   Size   Used  Mounted on`);
+          print(`origin      ${quota.padStart(4)}G ${used.padStart(6)}M  /`);
+        });
+        break;
+      case "free":
+        print(`              total   used`);
+        print(`Mem:      ${(info.memory ?? "n/a").padStart(9)}   some`);
+        break;
+      case "ping":
+        print(`PONG ${arg ?? "robblack.dev"}: time=0.1 ms (it is right here)`);
+        break;
+      case "ssh":
+      case "telnet":
+        print("connection refused. politely.", "warn");
+        break;
+      case "curl":
+      case "wget":
+        print("you are already here.", "dim");
+        break;
+      case "npm":
+      case "pnpm":
+      case "yarn":
+        print("already up to date. 0 vulnerabilities. we checked.");
+        break;
+      case "docker":
+        print("it works on my machine.", "dim");
+        break;
+      case "make":
+        print(
+          arg
+            ? `make: *** No rule to make target '${rest}'. Stop.`
+            : "make: *** No targets. Stop.",
+          "warn",
+        );
+        break;
+      case "coffee":
+      case "tea":
+        print("418 I'm a teapot.", "warn");
+        break;
+      case "hack":
+        print(
+          /planet/i.test(rest)
+            ? "HACK THE PLANET."
+            : "mess with the best, die like the rest.",
+          "accent",
+        );
+        break;
+      case "neo":
+      case "wake":
+        print("follow the white rabbit.", "dim");
+        break;
+      case "xyzzy":
+      case "plugh":
+        print("nothing happens.", "dim");
+        break;
+      case "42":
+        print("so long, and thanks for all the fish.", "dim");
+        break;
+      case "hello":
+      case "hi":
+      case "hey":
+        print("hello. type help.");
+        break;
+      case "fortune":
+        print(FORTUNES[Math.floor(Math.random() * FORTUNES.length)]);
+        break;
+      case "cowsay": {
+        const msg = rest || "moo";
+        print(` ${"_".repeat(msg.length + 2)}`);
+        print(`< ${msg} >`);
+        print(` ${"-".repeat(msg.length + 2)}`);
+        print("        \\   ^__^");
+        print("         \\  (oo)\\_______");
+        print("            (__)\\       )\\/\\");
+        print("                ||----w |");
+        print("                ||     ||");
+        break;
+      }
+      case "sl":
+        for (const l of TRAIN) print(l, "accent");
+        print("you meant ls. everyone does.", "dim");
+        break;
+      case "distros":
+      case "lineage":
+        print("distributions, as remembered. dates approximate.", "dim");
+        for (const [year, name, note] of DISTROS)
+          print(`${year}  ${name.padEnd(28)} ${note}`);
+        break;
+      case "konami":
+        print(
+          "up up down down left right left right b a. you are already here.",
+          "dim",
+        );
+        break;
+      case "reboot":
+      case "restart":
+        setLines([]);
+        setBooted(false);
+        setBootKey((k) => k + 1);
+        break;
+      case "shutdown":
+      case "poweroff":
+      case "halt":
+        print("the system is going down for halt NOW.", "warn");
+        window.setTimeout(onClose, 500);
         break;
       case "clear":
       case "cls":
@@ -518,6 +873,7 @@ export function Terminal({
       case "exit":
       case "quit":
       case "q":
+      case "logout":
         onClose();
         break;
       default:
@@ -586,7 +942,7 @@ export function Terminal({
                 key={l.id}
                 className={`whitespace-pre-wrap break-words ${toneClass(l.tone)}`}
               >
-                {l.text || " "}
+                {l.node ?? (l.text || " ")}
               </div>
             ))}
             {partial ? (
