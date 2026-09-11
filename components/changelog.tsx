@@ -22,7 +22,7 @@ export function Changelog() {
       title="Every release, newest first."
       lede="Calendar versioned. One rollback, and it was on purpose."
     >
-      <div className="grid gap-12 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-16">
+      <div className="grid gap-12 lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-16">
         <nav aria-label="Release index" className="hidden lg:block">
           <ol className="mono sticky top-24 space-y-2 text-xs">
             {releases.map((release) => (
@@ -31,7 +31,7 @@ export function Changelog() {
                   href={`#${anchorFor(release)}`}
                   className="group flex items-baseline gap-3 text-muted transition-colors hover:text-fg"
                 >
-                  <span className="w-[6rem] shrink-0 text-accent/80 group-hover:text-accent">
+                  <span className="w-[7rem] shrink-0 text-accent/80 group-hover:text-accent">
                     v{release.version}
                   </span>
                   <span className="truncate">{release.org}</span>

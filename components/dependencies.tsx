@@ -12,10 +12,14 @@ export function Dependencies() {
       <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
         {dependencies.map((group) => (
           <div key={group.name}>
-            <h3 className="mono text-sm font-medium text-accent">
+            <h3
+              className={`mono text-sm font-medium ${group.deprecated ? "text-removed" : "text-accent"}`}
+            >
               {group.name}
             </h3>
-            <ul className="mono mt-3 space-y-1.5 text-sm text-muted">
+            <ul
+              className={`mono mt-3 space-y-1.5 text-sm ${group.deprecated ? "text-faint line-through" : "text-muted"}`}
+            >
               {group.packages.map((pkg) => (
                 <li key={pkg} className="flex items-baseline gap-2">
                   <span aria-hidden="true" className="text-faint">

@@ -39,6 +39,8 @@ export interface FocusArea {
 export interface DependencyGroup {
   name: string;
   packages: string[];
+  /** Retired packages, shown struck through. Still fond of them. */
+  deprecated?: boolean;
 }
 
 export const person = {
@@ -204,6 +206,31 @@ export const releases: Release[] = [
     ],
   },
   {
+    version: versionFor(2015, 8),
+    date: "August 2015",
+    dateTime: "2015-08",
+    org: "2DEVS",
+    role: "Co-founder, evenings and weekends",
+    changes: [
+      {
+        kind: "added",
+        text: "A two-person freelance studio with a designer on frontend and UX and me on everything behind it, run around the day job.",
+      },
+      {
+        kind: "added",
+        text: "Bespoke sites and systems for a dozen small businesses, an Umbraco build, a NopCommerce shop, and the 2015 Student Gems rebuild, maintained into 2018.",
+      },
+      {
+        kind: "added",
+        text: "A prototype intranet and CRM for a visa consultancy. The owner passed. Ten years later, see v26.01.0.",
+      },
+      {
+        kind: "removed",
+        text: "2DEVS itself, wound down a few years later. Side hustles have lifecycles too.",
+      },
+    ],
+  },
+  {
     version: versionFor(2013, 1),
     date: "January 2013",
     dateTime: "2013-01",
@@ -317,6 +344,10 @@ export const releases: Release[] = [
         kind: "changed",
         text: "More ASP.NET, co-writing an intranet for the largest e-commerce customer.",
       },
+      {
+        kind: "note",
+        text: "Two Arcaysis customers followed me out of the door as freelance clients. A good sign, I decided.",
+      },
     ],
   },
   {
@@ -337,6 +368,10 @@ export const releases: Release[] = [
       {
         kind: "note",
         text: "Contracted out to Rade New Media in 2006 to teach their team the system. Ended up staying.",
+      },
+      {
+        kind: "note",
+        text: "Also trading on the side as RB Web Developments: around thirty small sites, forum setups, online stores and, according to the services page, vinyl-to-CD transfers. A full-stack offering.",
       },
     ],
   },
@@ -379,11 +414,11 @@ export const releases: Release[] = [
     changes: [
       {
         kind: "added",
-        text: "A community matchmaking site built from scratch: bespoke CMS, membership system and secure payment processing.",
+        text: "A dating site built from scratch: bespoke CMS, membership system and card payments, back when that meant persuading a bank and an acquirer that the internet was real. They took some persuading.",
       },
       {
-        kind: "deprecated",
-        text: "AfterTwelve.com itself, closed by its owners in 2004. Not a code issue.",
+        kind: "note",
+        text: "It got real traction. Closed in 2004. Not a code issue.",
       },
     ],
   },
@@ -426,6 +461,56 @@ export const releases: Release[] = [
       {
         kind: "added",
         text: "Hardware and software rollouts alongside the sysadmins when the site needed it. Everyone did everything.",
+      },
+      {
+        kind: "note",
+        text: "First job title with the words web developer in it.",
+      },
+    ],
+  },
+  {
+    version: versionFor(1999, 8),
+    date: "August 1999",
+    dateTime: "1999-08",
+    org: "Sale Computer Systems",
+    role: "Co-founder and developer",
+    changes: [
+      {
+        kind: "added",
+        text: "An early e-commerce site for computer peripherals and a PC build service, on a company I set up with family. Taking card payments online meant persuading a bank, not adding a script tag.",
+      },
+      {
+        kind: "changed",
+        text: "Andover TownCentral, commercialised. Same forum, now with adverts.",
+      },
+      {
+        kind: "added",
+        text: "A small content network: TeenScene for teenagers, NappyRash for new parents, AfterTwelve for dating, with our own banner ad platform running across all of them.",
+      },
+      {
+        kind: "added",
+        text: "TastyTones: ringtones, polyphonics and logos for the Nokia 3310 generation. It made money. The syndication partner made more.",
+      },
+      {
+        kind: "note",
+        text: "Dissolved in 2003. All of it Classic ASP on one Windows box. I still have the IIS logs.",
+      },
+    ],
+  },
+  {
+    version: "98.x.0-alpha",
+    date: "1998",
+    dateTime: "1998",
+    org: "Andover TownCentral",
+    role: "Pre-release",
+    changes: [
+      {
+        kind: "added",
+        text: "A community site for my home town, built while working through Sams Teach Yourself ASP in 21 Days, then Active Server Pages Unleashed. ASP 2 and Access 97.",
+      },
+      {
+        kind: "added",
+        text: "Forum, chat, classifieds, local news, restaurants, churches, pet rescue, recipes, and a high-score table for Pacman, Space Invaders and Snake.",
       },
       {
         kind: "note",
@@ -532,6 +617,20 @@ export const dependencies: DependencyGroup[] = [
       "automated-testing",
       "continuous-feedback",
     ],
+  },
+  {
+    name: "deprecated",
+    packages: [
+      "classic-asp",
+      "vbscript",
+      "access-97",
+      "snitz-forums-2000",
+      "cdonts",
+      "jquery",
+      "knockoutjs",
+      "ie6",
+    ],
+    deprecated: true,
   },
 ];
 
