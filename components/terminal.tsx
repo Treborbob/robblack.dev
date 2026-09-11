@@ -85,8 +85,19 @@ function collect(build: BuildInfo, cssTimelines: boolean): SysInfo {
     : uaMatch
       ? `${uaMatch[1]} ${uaMatch[2].split(".")[0]}`
       : "unknown";
-  const platform =
+  const rawPlatform =
     nav.userAgentData?.platform ?? navigator.platform ?? "unknown";
+  const platform = /mac/i.test(rawPlatform)
+    ? "macOS"
+    : /win/i.test(rawPlatform)
+      ? "Windows"
+      : /linux|x11/i.test(rawPlatform)
+        ? "Linux"
+        : /iphone|ipad/i.test(rawPlatform)
+          ? "iOS"
+          : /android/i.test(rawPlatform)
+            ? "Android"
+            : rawPlatform;
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const offset = -new Date().getTimezoneOffset() / 60;
   const fonts = Array.from(
@@ -198,13 +209,17 @@ function bootScript(build: BuildInfo, info: SysInfo): Line[] {
   ];
 }
 
+/** Plain ASCII on purpose: box-drawing glyphs fall back to another font and collapse. */
 const LOGO = [
-  " ██████╗ ██████╗ ",
-  " ██╔══██╗██╔══██╗",
-  " ██████╔╝██████╔╝",
-  " ██╔══██╗██╔══██╗",
-  " ██║  ██║██████╔╝",
-  " ╚═╝  ╚═╝╚═════╝ ",
+  "  #####    #####  ",
+  "  ##   ##  ##   ## ",
+  "  ##   ##  ##   ## ",
+  "  ######   ######  ",
+  "  ##  ##   ##   ## ",
+  "  ##   ##  ##   ## ",
+  "  ##   ##  ######  ",
+  "                   ",
+  "    since 1999     ",
 ];
 
 const TRAIN = [
@@ -506,6 +521,7 @@ export function Terminal({
       ["Resolution", info.resolution ?? "n/a"],
       ["DE", "Bricolage Grotesque"],
       ["WM", "Tailwind 4"],
+      ["Theme", "dark. there is no toggle."],
       ["Terminal", `${info.browser ?? "unknown"}`],
       ["CPU", info.cpu ?? "n/a"],
       ["GPU", info.gpu ?? "n/a"],
@@ -529,7 +545,9 @@ export function Terminal({
       text,
       undefined,
       <div className="flex gap-6">
-        <pre className="text-accent leading-[1.2]">{LOGO.join("\n")}</pre>
+        <pre className="text-[13px] text-accent leading-[1.15]">
+          {LOGO.join("\n")}
+        </pre>
         <div>
           <div className="text-accent">guest@robblack.dev</div>
           <div className="text-added/50">{"-".repeat(18)}</div>
