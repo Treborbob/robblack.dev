@@ -1,5 +1,6 @@
 import { person } from "@/lib/content";
 import { currentVersion } from "@/lib/version";
+import { Mark } from "./mark";
 
 const nav = [
   { href: "#changelog", label: "Changelog" },
@@ -13,6 +14,7 @@ export function Header() {
     <header className="sticky top-0 z-20 border-b border-line bg-ink/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-3 sm:px-8">
         <a href="#top" className="mono flex items-center gap-3 text-sm text-fg">
+          <Mark className="h-3.5 w-auto text-accent" />
           <span className="font-medium">
             {person.name.toLowerCase().replace(" ", "")}
           </span>

@@ -32,13 +32,48 @@ export default async function Image() {
       <div
         style={{
           display: "flex",
-          fontFamily: "Plex",
-          fontSize: 22,
-          letterSpacing: 2,
-          color: "#8e96a6",
+          alignItems: "center",
+          justifyContent: "space-between",
         }}
       >
-        {person.name.toUpperCase()} / RELEASE NOTES
+        <div
+          style={{
+            display: "flex",
+            fontFamily: "Plex",
+            fontSize: 22,
+            letterSpacing: 2,
+            color: "#8e96a6",
+          }}
+        >
+          {person.name.toUpperCase()} / RELEASE NOTES
+        </div>
+        <svg width="66" height="42" viewBox="0 0 66 42" aria-hidden="true">
+          <g fill="#f0b35b">
+            <rect x="0.00" y="0.00" width="24.00" height="6.00" />
+            <rect x="36.00" y="0.00" width="24.00" height="6.00" />
+            <rect x="0.00" y="6.00" width="6.00" height="6.00" />
+            <rect x="24.00" y="6.00" width="6.00" height="6.00" />
+            <rect x="36.00" y="6.00" width="6.00" height="6.00" />
+            <rect x="60.00" y="6.00" width="6.00" height="6.00" />
+            <rect x="0.00" y="12.00" width="6.00" height="6.00" />
+            <rect x="24.00" y="12.00" width="6.00" height="6.00" />
+            <rect x="36.00" y="12.00" width="6.00" height="6.00" />
+            <rect x="60.00" y="12.00" width="6.00" height="6.00" />
+            <rect x="0.00" y="18.00" width="24.00" height="6.00" />
+            <rect x="36.00" y="18.00" width="24.00" height="6.00" />
+            <rect x="0.00" y="24.00" width="6.00" height="6.00" />
+            <rect x="12.00" y="24.00" width="6.00" height="6.00" />
+            <rect x="36.00" y="24.00" width="6.00" height="6.00" />
+            <rect x="60.00" y="24.00" width="6.00" height="6.00" />
+            <rect x="0.00" y="30.00" width="6.00" height="6.00" />
+            <rect x="18.00" y="30.00" width="6.00" height="6.00" />
+            <rect x="36.00" y="30.00" width="6.00" height="6.00" />
+            <rect x="60.00" y="30.00" width="6.00" height="6.00" />
+            <rect x="0.00" y="36.00" width="6.00" height="6.00" />
+            <rect x="24.00" y="36.00" width="6.00" height="6.00" />
+            <rect x="36.00" y="36.00" width="24.00" height="6.00" />
+          </g>
+        </svg>
       </div>
       <div
         style={{
