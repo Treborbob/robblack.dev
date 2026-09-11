@@ -103,11 +103,11 @@ export function CommitGraph() {
     const draw = () => {
       if (!main) return;
       const box = host.getBoundingClientRect();
-      // The graph is drawn down to a line 38% from the top of the viewport,
-      // the same band that lights the release index.
+      // The graph is drawn down to just above the bottom of the viewport, so
+      // the visible part is always complete and grows as entries scroll in.
       const line = reduced
         ? Number.POSITIVE_INFINITY
-        : window.innerHeight * 0.38 - box.top;
+        : window.innerHeight * 0.92 - box.top;
       const reveal = (y0: number, y1: number) =>
         Math.max(0, Math.min(1, (line - y0) / (y1 - y0)));
       main.el.style.strokeDashoffset = String(
