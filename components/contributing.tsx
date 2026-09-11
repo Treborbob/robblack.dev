@@ -9,7 +9,7 @@ export function Contributing() {
       title="How to work with me."
       lede="For hiring managers, tech leads and anyone about to send the calendar invite."
     >
-      <div className="grid gap-12 lg:grid-cols-3 lg:gap-10">
+      <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_17rem] lg:gap-8">
         {contributing.map((block) => (
           <div key={block.title}>
             <h3 className="display-sm text-xl font-medium">{block.title}</h3>

@@ -61,7 +61,7 @@ export const intro = {
   body: [
     "I'm a senior developer who spends most of his time making delivery smoother for other people: the tooling, pipelines and workflows that sit around the code, as much as the code itself.",
     "The thread through everything is enablement. Tight feedback loops, fewer manual steps, and environments where a team can do good work without ceremony.",
-    "These days I work AI-first. I have not written a line of production code in almost a year. I have designed the systems, reviewed a great deal of code, and briefed several models with the context, constraints and taste to produce what I would have written, sooner. The ideas are still mine. The typing is delegated.",
+    "These days I work AI-first: several models, briefed with the context, constraints and taste that twenty-seven years of shipping gives you. I design the systems, set the standards and review every line, and I have written very little code by hand this year because I have not needed to. When a model cannot do it, I can. The ideas are still mine. The typing is delegated.",
   ],
 };
 
@@ -102,7 +102,7 @@ export const releases: Release[] = [
       },
       {
         kind: "changed",
-        text: "How the code gets written. AI-first, several models, and a lot of care over context, prompts and constraints. I direct and review; I rarely type. Nearly every line shipped this year was produced that way, and every line was read.",
+        text: "How the code gets written. AI-first, several models, and a lot of care over context, prompts and constraints. I direct and review; I rarely type. Nearly every line shipped this year was produced that way, every line was read, and the parts the models could not manage I wrote myself.",
       },
       {
         kind: "added",
@@ -673,9 +673,19 @@ export const contributing = [
   {
     title: "How I approach change",
     points: [
+      "Start from yes, then work out how, then say what it will cost",
       "Incremental, low-risk improvements over disruptive rewrites",
       "Reliable systems that are simple to run and easy to understand",
       "Reduce friction, risk and avoidable complexity so growth is sustainable",
+    ],
+  },
+  {
+    title: "How I use AI",
+    points: [
+      "I know what good looks like, so I can tell when the output is not it",
+      "The model gets the context, constraints and standards; I keep the architecture, the review and the accountability",
+      "I keep up with what is possible, which is how I know what to ask for",
+      "If it cannot be done with AI, it gets done without it",
     ],
   },
 ];
