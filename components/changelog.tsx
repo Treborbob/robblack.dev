@@ -70,7 +70,9 @@ export function Changelog() {
                       key={change.text.slice(0, 32)}
                       className="grid gap-1 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-4"
                     >
-                      <span className={`kind kind-${change.kind} pt-[0.2rem]`}>
+                      <span
+                        className={`kind kind-${change.kind} self-start pt-[0.35rem]`}
+                      >
                         {kindLabel[change.kind]}
                       </span>
                       <p
