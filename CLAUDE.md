@@ -38,10 +38,11 @@ pnpm build
   `timeline-scope` on the changelog grid and a `view-timeline-name` per
   entry, animated in `globals.css`. No JavaScript, no active state in
   browsers without scroll-driven animations.
-- There is a hidden debug console (`components/debug-console.tsx`, loaded on
+- There is a hidden Quake-style console (`components/terminal.tsx`, loaded on
   demand by `components/runtime.tsx`). Keyboard only: the backtick key or the
-  Konami code. The console boot log hints at it. Build facts come from
-  `next.config.ts` `env` via `lib/build-info.ts`. Do not add a visible trigger.
+  Konami code. It types out a boot sequence of real browser and build facts,
+  then takes commands (`help`). Build facts come from `next.config.ts` `env`
+  via `lib/build-info.ts`. Do not add a visible trigger.
 - The Browser pane does not paint while hidden, so scroll-driven animations
   and `requestAnimationFrame` never advance there. To verify interactive
   behaviour, drive headless Chrome over the DevTools protocol from a small

@@ -4,10 +4,9 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import type { BuildInfo } from "@/lib/build-info";
 
-const DebugConsole = dynamic(
-  () => import("./debug-console").then((m) => m.DebugConsole),
-  { ssr: false },
-);
+const Terminal = dynamic(() => import("./terminal").then((m) => m.Terminal), {
+  ssr: false,
+});
 
 const KONAMI = [
   "ArrowUp",
@@ -110,14 +109,14 @@ function bootLog(build: BuildInfo, cssTimelines: boolean) {
         .join(", "),
     );
   }
-  line("hint", "press ` for the debug console. up up down down also works.");
+  line("hint", "press ` for the console. up up down down also works.");
   line("hint", "type help() for commands.");
 }
 
 function installCommands(build: BuildInfo, open: () => void) {
   window.help = () => {
     console.log(
-      `%chelp()      this list\n%cdebug()     open the debug console (or press \`)\n%cversion()   current version string\n%cchangelog() every release, newest first`,
+      `%chelp()      this list\n%cdebug()     open the console (or press \`)\n%cversion()   current version string\n%cchangelog() every release, newest first`,
       TEXT,
       TEXT,
       TEXT,
@@ -213,7 +212,7 @@ export function Runtime({ build }: { build: BuildInfo }) {
 
   if (!open) return null;
   return (
-    <DebugConsole
+    <Terminal
       build={build}
       cssTimelines={cssTimelines}
       onClose={() => setOpen(false)}

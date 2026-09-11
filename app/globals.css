@@ -267,15 +267,9 @@
 }
 
 /* Debug console toggles. Attributes are set on <html> while a toggle is on. */
-html[data-debug-wire] *:not(html):not(body) {
+html[data-debug-wire] *:not(html, body, .terminal, .terminal *) {
   outline: 1px solid color-mix(in oklab, var(--color-added) 45%, transparent);
   outline-offset: -1px;
-}
-html[data-debug-freeze] *,
-html[data-debug-freeze] *::before,
-html[data-debug-freeze] *::after {
-  animation-play-state: paused;
-  transition: none;
 }
 .debug-grid {
   position: fixed;
@@ -308,4 +302,47 @@ html[data-debug-freeze] *::after {
     color-mix(in oklab, var(--color-accent) 50%, transparent);
   border-bottom: 1px dashed
     color-mix(in oklab, var(--color-accent) 50%, transparent);
+}
+
+/* Quake-style console. */
+.terminal {
+  transform: translateY(0);
+}
+.terminal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 2px,
+    rgba(0, 0, 0, 0.08) 2px 3px
+  );
+}
+@media (prefers-reduced-motion: no-preference) {
+  .terminal {
+    animation: drop 260ms var(--ease-out-expo);
+  }
+  @keyframes drop {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  .cursor {
+    display: inline-block;
+    width: 0.6em;
+    height: 1em;
+    margin-left: 1px;
+    vertical-align: -0.15em;
+    background: var(--color-added);
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
 }
