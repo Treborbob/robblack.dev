@@ -1,51 +1,44 @@
 # robblack.dev
 
-Personal portfolio and professional website for Rob Black.
+Personal site for Rob Black. One page, written as a changelog.
 
-[Live Site](https://robblack.dev)
+[Live site](https://robblack.dev)
 
-## Tech Stack
+## Stack
 
-- **Framework**: [Astro](https://astro.build)
-- **Styling**: Tailwind CSS
-- **Deployment**: Netlify
-- **Design**: Dark mode bento-box layout
+- Next.js 16 (App Router, server components only, no client JS beyond Next's runtime)
+- React 19, TypeScript strict
+- Tailwind CSS 4
+- Biome for lint and format
+- pnpm
+- Deployed on Vercel
 
-## Features
+No database, no auth, no analytics, no cookies.
 
-- Responsive bento-grid layout
-- Comprehensive core competencies showcase
-- Professional experience timeline
-- Contact information and social links
-- Clean, modern dark theme
+## Content
+
+Everything on the page comes from `lib/content.ts`. Edit that file to update
+roles, releases, projects or contact details. Version numbers follow the
+scheme in `lib/version.ts`: major is years since 1999, minor is the month.
 
 ## Development
 
 ```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
+pnpm install
+pnpm dev        # http://localhost:3000
+pnpm check      # biome + tsc
+pnpm build
 ```
 
-## Project Structure
+## Structure
 
 ```
-src/
-├── components/     # Reusable Astro components
-├── data/          # Portfolio data and content
-├── layouts/       # Page layouts
-├── pages/         # Route pages
-└── styles/        # Global styles
+app/          layout, page, global styles
+components/   one file per section of the page
+lib/          content and the version helper
+public/       static assets
 ```
 
-## License
+## Licence
 
-© 2025 Rob Black. All rights reserved.
+© Rob Black. All rights reserved.

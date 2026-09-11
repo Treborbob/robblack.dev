@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0f1219;
+  --color-panel: #151923;
+  --color-line: #252b38;
+  --color-line-strong: #343b4b;
+  --color-fg: #e7e4dc;
+  --color-muted: #8e96a6;
+  --color-faint: #5c6473;
+  --color-accent: #f0b35b;
+  --color-added: #7fc98a;
+  --color-changed: #74b0ea;
+  --color-deprecated: #e7a94f;
+  --color-removed: #e27878;
+  --color-fixed: #b9a0f2;
+
+  --font-display: var(--font-bricolage), "Helvetica Neue", Arial, sans-serif;
+  --font-body: var(--font-instrument), system-ui, sans-serif;
+  --font-mono:
+    var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-fg);
+    font-family: var(--font-body);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 35%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+}
+
+@layer components {
+  .display {
+    font-family: var(--font-display);
+    font-variation-settings:
+      "opsz" 96,
+      "wdth" 100;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
+    text-wrap: balance;
+  }
+
+  .display-sm {
+    font-family: var(--font-display);
+    font-variation-settings:
+      "opsz" 24,
+      "wdth" 100;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+    font-feature-settings: "zero", "ss02";
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .prose-block p + p {
+    margin-top: 1em;
+  }
+
+  .link {
+    color: var(--color-fg);
+    text-decoration: underline;
+    text-decoration-color: var(--color-line-strong);
+    transition: text-decoration-color 160ms ease;
+  }
+  .link:hover {
+    text-decoration-color: var(--color-accent);
+  }
+
+  /* Change kind marker: dot + label, colour encodes the kind. */
+  .kind {
+    --kind: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--kind);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+  }
+  .kind::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--kind);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--kind) 18%, transparent);
+  }
+  .kind-added {
+    --kind: var(--color-added);
+  }
+  .kind-changed {
+    --kind: var(--color-changed);
+  }
+  .kind-deprecated {
+    --kind: var(--color-deprecated);
+  }
+  .kind-removed {
+    --kind: var(--color-removed);
+  }
+  .kind-fixed {
+    --kind: var(--color-fixed);
+  }
+  .kind-note {
+    --kind: var(--color-faint);
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  .version-pill {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: var(--color-ink);
+    background: var(--color-accent);
+    border-radius: 6px;
+    padding: 0.2rem 0.55rem;
+    line-height: 1.4;
+  }
+
+  /* Hairline with the faint dashed look of a diff separator. */
+  .rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      var(--color-line-strong),
+      var(--color-line) 40%,
+      transparent
+    );
+  }
+}
+
+/* Motion: one orchestrated load sequence, then quiet scroll reveals. */
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: rise 900ms var(--ease-out-expo) forwards;
+    animation-delay: var(--delay, 0ms);
+  }
+
+  @keyframes rise {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+}
