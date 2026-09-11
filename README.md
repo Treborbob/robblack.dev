@@ -42,5 +42,6 @@ public/       static assets
 ## Licence
 
 Code is MIT, see [LICENSE](LICENSE). The written content, the RB mark and the
-share image are © Rob Black, all rights reserved: fork the code, replace the
-content. Fonts under `app/fonts` are OFL, see `app/fonts/LICENSE.txt`.
+share image are © Rob Black, all rights reserved, see [NOTICE](NOTICE): fork the
+code, replace the content. Fonts under `app/fonts` are OFL, see
+`app/fonts/LICENSE.txt`.

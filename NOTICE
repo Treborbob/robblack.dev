@@ -1,0 +1,10 @@
+robblack.dev
+
+The licence above covers the code. It does not cover the written content in
+lib/content.ts, the RB mark and other files under public/brand, or the
+generated share image, which describe a real person and remain
+Copyright (c) Rob Black, all rights reserved. Fork the code by all means;
+please replace the content with your own.
+
+The fonts under app/fonts are third-party and licensed separately under the
+SIL Open Font License; see app/fonts/LICENSE.txt.
