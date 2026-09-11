@@ -8,7 +8,7 @@ interface SectionProps {
 
 export function Section({ id, file, title, lede, children }: SectionProps) {
   return (
-    <section id={id} className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-16">
+    <section id={id} className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-12">
       <div className="rule mb-10" />
       <div className="reveal mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>

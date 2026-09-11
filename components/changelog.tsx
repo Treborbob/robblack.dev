@@ -1,4 +1,5 @@
 import { type Release, releases } from "@/lib/content";
+import { RouletteWord } from "./roulette-trigger";
 import { Section } from "./section";
 
 const kindLabel: Record<Release["changes"][number]["kind"], string> = {
@@ -11,10 +12,25 @@ const kindLabel: Record<Release["changes"][number]["kind"], string> = {
 };
 
 function anchorFor(release: Release) {
-  return `v${(release.version).replace(/[^0-9a-z]+/gi, "-")}`;
+  return `v${release.version.replace(/[^0-9a-z]+/gi, "-")}`;
+}
+
+/** One word on the page is not what it seems. */
+function withEgg(text: string) {
+  const word = "roulette";
+  const at = text.indexOf(word);
+  if (at === -1) return text;
+  return (
+    <>
+      {text.slice(0, at)}
+      <RouletteWord>{word}</RouletteWord>
+      {text.slice(at + word.length)}
+    </>
+  );
 }
 
 export function Changelog() {
+  const scope = releases.map((_, i) => `--r${i}`).join(", ");
   return (
     <Section
       id="changelog"
@@ -22,18 +38,20 @@ export function Changelog() {
       title="Every release, newest first."
       lede="Calendar versioned. One rollback, and it was on purpose."
     >
-      <div className="grid gap-12 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-16">
+      <div
+        className="changelog-scope grid gap-12 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-16"
+        style={{ "--scope": scope } as React.CSSProperties}
+      >
         <nav aria-label="Release index" className="hidden lg:block">
           <ol className="mono sticky top-24 space-y-2 text-xs">
-            {releases.map((release) => (
+            {releases.map((release, i) => (
               <li key={release.version}>
                 <a
                   href={`#${anchorFor(release)}`}
-                  className="group flex items-baseline gap-3 text-muted transition-colors hover:text-fg"
+                  className="index-link flex items-baseline gap-3 text-muted transition-colors hover:text-fg"
+                  style={{ "--tl": `--r${i}` } as React.CSSProperties}
                 >
-                  <span className="w-[7rem] shrink-0 text-accent/80 group-hover:text-accent">
-                    v{release.version}
-                  </span>
+                  <span className="w-[7rem] shrink-0">v{release.version}</span>
                   <span className="truncate">{release.org}</span>
                 </a>
               </li>
@@ -42,15 +60,16 @@ export function Changelog() {
         </nav>
 
         <ol className="space-y-14">
-          {releases.map((release) => (
+          {releases.map((release, i) => (
             <li
               key={release.version}
               id={anchorFor(release)}
-              className="reveal scroll-mt-24"
+              className="release reveal scroll-mt-24"
+              style={{ "--tl": `--r${i}` } as React.CSSProperties}
             >
               <article>
                 <header className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                  <h3 className="mono text-xl font-medium text-accent">
+                  <h3 className="mono text-xl font-medium text-fg">
                     v{release.version}
                   </h3>
                   <time
@@ -78,7 +97,7 @@ export function Changelog() {
                       <p
                         className={`max-w-[62ch] leading-relaxed ${change.kind === "note" ? "text-muted" : "text-fg/90"}`}
                       >
-                        {change.text}
+                        {withEgg(change.text)}
                       </p>
                     </li>
                   ))}

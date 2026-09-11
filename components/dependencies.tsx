@@ -10,14 +10,12 @@ export function Dependencies() {
       id="dependencies"
       file="package.json"
       title="Dependencies."
-      lede="Pinned, not floating. No skill bars were harmed in the making of this list."
+      lede="Pinned, not floating."
     >
-      <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
         {active.map((group) => (
           <div key={group.name}>
-            <h3 className="mono text-sm font-medium text-accent">
-              {group.name}
-            </h3>
+            <h3 className="mono text-sm font-medium text-fg">{group.name}</h3>
             <ul className="mono mt-3 space-y-1.5 text-sm text-muted">
               {group.packages.map((pkg) => (
                 <li key={pkg} className="flex items-baseline gap-2">
@@ -37,9 +35,9 @@ export function Dependencies() {
           <h3 className="mono text-sm font-medium text-removed">
             {group.name}
           </h3>
-          <ul className="mono mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-faint">
+          <ul className="mono mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-muted">
             {group.packages.map((pkg) => (
-              <li key={pkg} className="line-through decoration-faint/70">
+              <li key={pkg} className="line-through decoration-removed/60">
                 {pkg}
               </li>
             ))}

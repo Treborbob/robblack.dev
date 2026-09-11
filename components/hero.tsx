@@ -1,12 +1,21 @@
 import { focusAreas, intro, person } from "@/lib/content";
 import { currentVersion, yearsShipping } from "@/lib/version";
 
+function Sep() {
+  return (
+    <span aria-hidden="true" className="mr-3 hidden text-faint sm:inline">
+      ·
+    </span>
+  );
+}
+
 export function Hero() {
   const version = currentVersion();
+  const years = yearsShipping();
   return (
     <section
       id="top"
-      className="mx-auto max-w-6xl px-5 pt-16 pb-20 sm:px-8 sm:pt-24 sm:pb-28"
+      className="mx-auto max-w-6xl px-5 pt-16 pb-16 sm:px-8 sm:pt-24 sm:pb-20"
     >
       <p
         className="eyebrow rise"
@@ -31,14 +40,12 @@ export function Hero() {
       </h1>
 
       <dl
-        className="rise mt-10 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm"
+        className="rise mono mt-10 flex flex-col items-start gap-y-2 text-sm text-muted sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3"
         style={{ "--delay": "300ms" } as React.CSSProperties}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3 whitespace-nowrap">
           <dt className="sr-only">Current version</dt>
           <dd className="version-pill">v{version}</dd>
-        </div>
-        <div className="mono flex items-center gap-2 text-muted">
           <dt className="sr-only">Status</dt>
           <dd className="flex items-center gap-2">
             <span
@@ -48,19 +55,22 @@ export function Hero() {
             stable
           </dd>
         </div>
-        <span aria-hidden="true" className="text-faint">
-          ·
-        </span>
-        <div className="mono text-muted">
-          <dt className="sr-only">Years shipping</dt>
-          <dd>{yearsShipping()} years in production</dd>
+        <div className="whitespace-nowrap">
+          <Sep />
+          <dt className="sr-only">Current role</dt>
+          <dd className="inline text-fg">
+            {person.currentRole} · {person.currentOrg}
+          </dd>
         </div>
-        <span aria-hidden="true" className="text-faint">
-          ·
-        </span>
-        <div className="mono text-muted">
+        <div className="whitespace-nowrap">
+          <Sep />
+          <dt className="sr-only">Years shipping</dt>
+          <dd className="inline">{years} years in production</dd>
+        </div>
+        <div className="whitespace-nowrap">
+          <Sep />
           <dt className="sr-only">Location</dt>
-          <dd>{person.location}</dd>
+          <dd className="inline">{person.location}</dd>
         </div>
       </dl>
 
@@ -70,7 +80,9 @@ export function Hero() {
       >
         <div className="prose-block max-w-[58ch] text-lg leading-relaxed text-fg/90">
           {intro.body.map((paragraph) => (
-            <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+            <p key={paragraph.slice(0, 24)}>
+              {paragraph.replace("{years}", String(years))}
+            </p>
           ))}
           <p className="mono mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm">
             <a className="link" href={`mailto:${person.email}`}>
@@ -96,12 +108,7 @@ export function Hero() {
         </div>
 
         <div>
-          <div className="flex items-baseline justify-between gap-4">
-            <h2 className="eyebrow whitespace-nowrap">Current release</h2>
-            <p className="mono hidden text-right text-xs text-faint xl:block">
-              {person.currentRole} · {person.currentOrg}
-            </p>
-          </div>
+          <h2 className="eyebrow whitespace-nowrap">Current release</h2>
           <ul className="mt-4 divide-y divide-line border-y border-line">
             {focusAreas.map((area) => (
               <li

@@ -9,8 +9,11 @@ import { Hero } from "@/components/hero";
 export default function Page() {
   return (
     <>
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
       <Header />
-      <main>
+      <main id="main">
         <Hero />
         <Changelog />
         <Builds />

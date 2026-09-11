@@ -45,7 +45,7 @@ export interface DependencyGroup {
 
 export const person = {
   name: "Rob Black",
-  role: "Senior developer",
+  role: "Senior Developer",
   location: "Ipswich, UK",
   email: "rob@robblack.co.uk",
   github: "https://github.com/treborbob",
@@ -61,7 +61,7 @@ export const intro = {
   body: [
     "I'm a senior developer who spends most of his time making delivery smoother for other people: the tooling, pipelines and workflows that sit around the code, as much as the code itself.",
     "The thread through everything is enablement. Tight feedback loops, fewer manual steps, and environments where a team can do good work without ceremony.",
-    "These days I work AI-first: several models, briefed with the context, constraints and taste that twenty-seven years of shipping gives you. I design the systems, set the standards and review every line, and I have written very little code by hand this year because I have not needed to. When a model cannot do it, I can. The ideas are still mine. The typing is delegated.",
+    "These days I work AI-first: several models, each briefed with the context, constraints and taste that {years} years of shipping gives you. I design the systems, set the standards and read every line. Most of the typing is delegated now. The judgement is not.",
   ],
 };
 
@@ -102,7 +102,7 @@ export const releases: Release[] = [
       },
       {
         kind: "changed",
-        text: "How the code gets written. AI-first, several models, and a lot of care over context, prompts and constraints. I direct and review; I rarely type. Nearly every line shipped this year was produced that way, every line was read, and the parts the models could not manage I wrote myself.",
+        text: "How the code gets written. Models draft against a written brief, hard constraints and a design system they cannot drift from. CI and I review. What they cannot manage, I write.",
       },
       {
         kind: "added",
@@ -135,7 +135,7 @@ export const releases: Release[] = [
     changes: [
       {
         kind: "added",
-        text: "AI tooling adopted by 90% of the development team, with integration guides and working practices that stuck.",
+        text: "GitHub Copilot rolled out across the studio, with integration guides and working practices most of the team still use.",
       },
       {
         kind: "added",
@@ -156,7 +156,7 @@ export const releases: Release[] = [
     date: "July 2018",
     dateTime: "2018-07",
     org: "Switch Studios",
-    role: "Client Developer L2",
+    role: "Client Developer",
     changes: [
       {
         kind: "added",
@@ -176,7 +176,7 @@ export const releases: Release[] = [
       },
       {
         kind: "note",
-        text: "Regulatory compliance reviews on every release. Every pixel audited.",
+        text: "Regulatory compliance reviews on every release.",
       },
     ],
   },
@@ -206,11 +206,11 @@ export const releases: Release[] = [
       },
       {
         kind: "added",
-        text: "Continuous integration and delivery with unit and automated UI tests, inside an ISO 27001 accredited company. First proper taste of a tightly regulated industry.",
+        text: "Continuous integration and delivery with unit and automated UI tests, inside an ISO 27001-certified company. First proper taste of a tightly regulated industry.",
       },
       {
         kind: "fixed",
-        text: "Reported bugs reproduced and isolated with the support team before a work item was raised. Debugging as a team sport.",
+        text: "Reported bugs reproduced and isolated with the support team before a work item was raised.",
       },
     ],
   },
@@ -227,11 +227,11 @@ export const releases: Release[] = [
       },
       {
         kind: "added",
-        text: "Bespoke sites and systems for a dozen small businesses, an Umbraco build, a NopCommerce shop, and the 2015 Student Gems rebuild, maintained into 2018.",
+        text: "Bespoke sites and systems for a dozen small businesses, an Umbraco build, a nopCommerce shop, and the 2015 Student Gems rebuild, maintained into 2018.",
       },
       {
         kind: "added",
-        text: "A prototype intranet and CRM for a visa consultancy. The owner passed. Ten years later, see v26.01.0.",
+        text: "A prototype intranet and CRM for a visa consultancy. The owner passed on it. Ten years later, see v26.01.0.",
       },
       {
         kind: "removed",
@@ -252,11 +252,11 @@ export const releases: Release[] = [
       },
       {
         kind: "added",
-        text: "Zero-downtime deploys to live systems with immediate rollback on failure. The habit stuck.",
+        text: "Zero-downtime deploys to live systems with immediate rollback on failure. Standard practice ever since.",
       },
       {
         kind: "added",
-        text: "KnockoutJS and MVVM, SignalR, Windows services, message queues, AngularJS, Web API, single-page apps, PhoneGap, SASS and LESS. Roughly everything, roughly at once.",
+        text: "KnockoutJS and MVVM, SignalR, Windows services, message queues, AngularJS, Web API, single-page apps, PhoneGap, Sass and LESS. Roughly everything, roughly at once.",
       },
       {
         kind: "changed",
@@ -268,7 +268,7 @@ export const releases: Release[] = [
       },
       {
         kind: "note",
-        text: "Microsoft Certified Solutions Developer for web applications, 2014. Renewed twice, then quietly retired along with the acronym.",
+        text: "Microsoft Certified Solutions Developer, Web Applications, 2014. Renewed twice, then quietly retired along with the acronym.",
       },
     ],
   },
@@ -281,7 +281,7 @@ export const releases: Release[] = [
     changes: [
       {
         kind: "changed",
-        text: "Rolled back to Rade, in a more senior role. The only rollback on this page, and it was deliberate.",
+        text: "Rolled back to Rade, in a more senior role.",
       },
       {
         kind: "added",
@@ -289,11 +289,11 @@ export const releases: Release[] = [
       },
       {
         kind: "added",
-        text: "QA testing, source control and bug tracking as standard practice. The first process I ever introduced to a team, and the start of a habit.",
+        text: "QA testing, source control and bug tracking as standard practice. The first process I ever introduced to a team.",
       },
       {
         kind: "added",
-        text: "Git. Just started using it, according to the 2012 CV.",
+        text: "Git. Just started using it, according to my 2012 CV.",
       },
       {
         kind: "fixed",
@@ -305,7 +305,7 @@ export const releases: Release[] = [
       },
       {
         kind: "removed",
-        text: "Internet Explorer 6 support. Eventually.",
+        text: "Internet Explorer 6 support.",
       },
     ],
   },
@@ -318,7 +318,7 @@ export const releases: Release[] = [
     changes: [
       {
         kind: "changed",
-        text: "From long-time freelancer to head of everything technical, after the company took angel investment.",
+        text: "From their long-time freelancer to head of everything technical, after the company took angel investment.",
       },
       {
         kind: "added",
@@ -326,7 +326,7 @@ export const releases: Release[] = [
       },
       {
         kind: "added",
-        text: "A content-managed bulk email system on HTML and plain-text templates with a dynamic SQL merge. A mail merge, in 2009, by hand. It worked.",
+        text: "A content-managed bulk email system on HTML and plain-text templates with a dynamic SQL merge. A mail merge, in 2009, by hand.",
       },
       {
         kind: "changed",
@@ -380,7 +380,7 @@ export const releases: Release[] = [
       },
       {
         kind: "note",
-        text: "Also trading on the side as RB Web Developments: around thirty small sites, forum setups, online stores and, according to the services page, vinyl-to-CD transfers. A full-stack offering.",
+        text: "Also trading on the side as RB Web Developments: around thirty small sites, forum setups, online stores and, according to the services page, vinyl-to-CD transfers.",
       },
     ],
   },
@@ -410,7 +410,7 @@ export const releases: Release[] = [
       },
       {
         kind: "note",
-        text: "A patch release. The company was acquired the following year.",
+        text: "Short stint. The company was acquired the following year.",
       },
     ],
   },
@@ -423,11 +423,11 @@ export const releases: Release[] = [
     changes: [
       {
         kind: "changed",
-        text: "A year and a half back on the Sale Computer Systems sites full time, with AfterTwelve getting most of the attention.",
+        text: "A year and a half back on the Sale Computer Systems sites full time (see v99.08.0), with AfterTwelve getting most of the attention.",
       },
       {
         kind: "added",
-        text: "A dating site built from scratch: bespoke CMS, membership system and card payments, back when that meant persuading a bank and an acquirer that the internet was real. They took some persuading.",
+        text: "A dating site built from scratch: bespoke CMS, membership system and card payments through a real merchant account.",
       },
       {
         kind: "note",
@@ -457,7 +457,7 @@ export const releases: Release[] = [
     date: "October 2000",
     dateTime: "2000-10",
     org: "Mirago",
-    role: "Initial release",
+    role: "Web Developer",
     changes: [
       {
         kind: "added",
@@ -490,7 +490,7 @@ export const releases: Release[] = [
     changes: [
       {
         kind: "added",
-        text: "An early e-commerce site for computer peripherals and a PC build service, on a company I set up with family. Taking card payments online meant persuading a bank, not adding a script tag.",
+        text: "An early e-commerce site for computer peripherals and a PC build service, through a company I set up with family. Taking card payments online meant persuading a bank, not adding a script tag.",
       },
       {
         kind: "changed",
@@ -523,7 +523,7 @@ export const releases: Release[] = [
       },
       {
         kind: "added",
-        text: "Forum, chat, classifieds, local news, restaurants, churches, pet rescue, recipes, and a high-score table for Pacman, Space Invaders and Snake.",
+        text: "Forum, chat, classifieds, local news, restaurants, churches, pet rescue, recipes, and a high-score table for Pac-Man, Space Invaders and Snake.",
       },
       {
         kind: "note",
@@ -538,7 +538,7 @@ export const projects: Project[] = [
     name: "Waypoint",
     label: "Internal work-management platform",
     description:
-      "The system of record for the business: leads, enquiries, jobs and clients, with kanban boards, reminders and operational reporting on top of a large amount of bespoke case-management logic shaped around how the team actually works. Replaced Trello. Integrates with Vault so a job and its documents stay in step, with preview environments, release discipline and documentation to match.",
+      "The system of record for the business: leads, enquiries, jobs and clients, with kanban boards, reminders and reporting on top of case-management logic shaped around how the team actually works. Replaced Trello. Integrates with Vault so a job and its documents stay in step. Preview environments, release discipline and documentation to match.",
     stack: [
       "Next.js 16",
       "TypeScript",
@@ -619,24 +619,6 @@ export const dependencies: DependencyGroup[] = [
     ],
   },
   {
-    name: "ai",
-    packages: [
-      "ai-augmented-development",
-      "prompt-engineering",
-      "copilot-optimisation",
-      "emerging-tech-evaluation",
-    ],
-  },
-  {
-    name: "leadership",
-    packages: [
-      "code-review-coaching",
-      "knowledge-sharing",
-      "technical-guidance",
-      "team-empowerment",
-    ],
-  },
-  {
     name: "quality",
     packages: [
       "static-analysis",
@@ -665,9 +647,9 @@ export const contributing = [
   {
     title: "How I add value",
     points: [
-      "Reduce administrative burden so people can spend time on higher-value work",
-      "Improve accuracy, traceability and consistency in day-to-day operations",
-      "Act as the technical bridge between what the business needs and what is maintainable",
+      "Take the repetitive admin off people who have better things to do",
+      "Make the numbers and the paperwork trustworthy",
+      "Translate between what the business wants and what will still run in three years",
     ],
   },
   {
@@ -676,7 +658,6 @@ export const contributing = [
       "Start from yes, then work out how, then say what it will cost",
       "Incremental, low-risk improvements over disruptive rewrites",
       "Reliable systems that are simple to run and easy to understand",
-      "Reduce friction, risk and avoidable complexity so growth is sustainable",
     ],
   },
   {

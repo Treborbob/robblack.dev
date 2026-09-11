@@ -37,6 +37,20 @@ export function Header() {
           ))}
         </nav>
       </div>
+      <nav
+        aria-label="Sections"
+        className="mono flex gap-5 overflow-x-auto px-5 pb-2.5 text-xs uppercase tracking-wider md:hidden"
+      >
+        {nav.map((item) => (
+          <a
+            key={item.href}
+            href={item.href}
+            className="shrink-0 text-muted transition-colors hover:text-fg"
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
     </header>
   );
 }
