@@ -98,7 +98,7 @@ export function Hero() {
 
           <div>
             <h2 className="eyebrow whitespace-nowrap">Current release</h2>
-            <ul className="mt-4 divide-y divide-line border-y border-line">
+            <ul className="mt-5 divide-y divide-line">
               {focusAreas.map((area) => (
                 <li
                   key={area.title}

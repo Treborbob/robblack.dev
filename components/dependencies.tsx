@@ -19,8 +19,8 @@ export function Dependencies() {
             <ul className="mono mt-3 space-y-1.5 text-sm text-muted">
               {group.packages.map((pkg) => (
                 <li key={pkg} className="flex items-baseline gap-2">
-                  <span aria-hidden="true" className="text-faint">
-                    –
+                  <span aria-hidden="true" className="text-added">
+                    +
                   </span>
                   {pkg}
                 </li>
@@ -31,13 +31,16 @@ export function Dependencies() {
       </div>
 
       {retired.map((group) => (
-        <div key={group.name} className="mt-12 border-t border-line pt-6">
+        <div key={group.name} className="mt-16">
           <h3 className="mono text-sm font-medium text-removed">
             {group.name}
           </h3>
           <ul className="mono mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-muted">
             {group.packages.map((pkg) => (
-              <li key={pkg} className="line-through decoration-removed/60">
+              <li key={pkg} className="flex items-baseline gap-2">
+                <span aria-hidden="true" className="text-removed">
+                  -
+                </span>
                 {pkg}
               </li>
             ))}

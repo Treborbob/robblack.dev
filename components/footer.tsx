@@ -8,7 +8,6 @@ export function Footer() {
     <footer className="relative mt-16 pt-16">
       <Phosphor fade="top" />
       <div className="relative mx-auto max-w-6xl px-5 pt-8 pb-16 sm:px-8">
-        <div className="rule mb-8" />
         <div className="mono flex flex-col gap-4 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {person.name} · v{currentVersion()}

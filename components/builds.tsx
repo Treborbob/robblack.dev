@@ -9,11 +9,11 @@ export function Builds() {
       title="Recent builds."
       lede="What is currently running for Paramount Visas."
     >
-      <ol className="divide-y divide-line border-y border-line">
+      <ol className="space-y-14">
         {projects.map((project) => (
           <li
             key={project.name}
-            className="reveal grid gap-4 py-8 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-10"
+            className="reveal grid gap-4 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-10"
           >
             <div>
               <h3 className="display-sm text-2xl font-medium">

@@ -97,7 +97,11 @@
   .link {
     color: var(--color-fg);
     text-decoration: underline;
-    text-decoration-color: var(--color-line-strong);
+    text-decoration-color: color-mix(
+      in oklab,
+      var(--color-accent) 40%,
+      var(--color-line-strong)
+    );
     transition: text-decoration-color 160ms ease;
   }
   .link:hover {
@@ -111,6 +115,7 @@
     font-size: 0.75rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
+    font-weight: 500;
     color: var(--kind);
     display: inline-flex;
     align-items: center;
@@ -119,11 +124,11 @@
   }
   .kind::before {
     content: "";
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 999px;
     background: var(--kind);
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--kind) 18%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--kind) 28%, transparent);
   }
   .kind-added {
     --kind: var(--color-added);

@@ -57,7 +57,9 @@ export function Changelog() {
             >
               <article>
                 <header className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                  <h3 className="mono text-xl font-medium text-fg">
+                  <h3
+                    className={`mono text-xl font-medium ${i === 0 ? "text-accent" : "text-fg"}`}
+                  >
                     v{release.version}
                   </h3>
                   <time

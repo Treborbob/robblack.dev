@@ -20,8 +20,16 @@ export function Contributing() {
             </ul>
           </div>
         ))}
-        <div className="rounded-lg border border-line bg-panel p-6">
-          <h3 className="eyebrow">Open to</h3>
+        <div
+          className="rounded-lg border p-6"
+          style={{
+            background:
+              "color-mix(in oklab, var(--color-accent) 6%, var(--color-panel))",
+            borderColor:
+              "color-mix(in oklab, var(--color-accent) 28%, var(--color-line))",
+          }}
+        >
+          <h3 className="eyebrow text-accent">Open to</h3>
           <ul className="mt-4 space-y-2.5 text-sm leading-relaxed">
             {openTo.map((role) => (
               <li key={role} className="flex items-baseline gap-3">
