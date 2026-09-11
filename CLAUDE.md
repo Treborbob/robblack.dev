@@ -31,3 +31,20 @@ pnpm build
 - Do not change DNS, delete the Netlify site, or touch Vercel production
   settings without being asked.
 - Commit in logical units once `pnpm check` passes.
+
+## Things that are not obvious
+
+- The release index highlights the current entry with CSS only: a shared
+  `timeline-scope` on the changelog grid and a `view-timeline-name` per
+  entry, animated in `globals.css`. No JavaScript, no active state in
+  browsers without scroll-driven animations.
+- There is a hidden roulette table. The word "roulette" in the Switch Studios
+  2018 entry is a button (`components/roulette-trigger.tsx`); the game is
+  `components/roulette.tsx`, loaded on demand and portalled to `body`. It is
+  also reachable from the console via `roulette()`. Do not signpost it.
+- The Browser pane does not paint while hidden, so scroll-driven animations
+  and `requestAnimationFrame` never advance there. To verify interactive
+  behaviour, drive headless Chrome over the DevTools protocol from a small
+  Node script (`--remote-debugging-port`, then `Runtime.evaluate` and
+  `Page.captureScreenshot`). Anchor URLs render blank in headless
+  `--screenshot`; capture full-page and crop instead.
