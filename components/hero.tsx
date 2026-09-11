@@ -83,7 +83,7 @@ export function Hero() {
               rel="me noopener"
               target="_blank"
             >
-              github
+              {person.githubLabel}
             </a>
             <a
               className="link"
@@ -91,7 +91,7 @@ export function Hero() {
               rel="me noopener"
               target="_blank"
             >
-              linkedin
+              {person.linkedinLabel}
             </a>
           </p>
         </div>

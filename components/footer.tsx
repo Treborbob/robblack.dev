@@ -33,8 +33,8 @@ export function Footer() {
         </p>
       </div>
       <p className="mono mt-6 text-xs text-faint">
-        Built with Next.js and Tailwind, deployed on Vercel. No tracking, no
-        cookies, no skill bars.
+        Built with Next.js and Tailwind, deployed on Vercel. No cookies, no
+        skill bars.
       </p>
     </footer>
   );

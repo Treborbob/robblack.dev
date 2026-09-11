@@ -46,7 +46,7 @@ export interface DependencyGroup {
 export const person = {
   name: "Rob Black",
   role: "Senior Developer",
-  location: "Ipswich, UK",
+  location: "Ipswich, Suffolk, UK",
   email: "rob@robblack.co.uk",
   github: "https://github.com/treborbob",
   githubLabel: "github.com/treborbob",

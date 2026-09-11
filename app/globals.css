@@ -63,9 +63,7 @@
 @layer components {
   .display {
     font-family: var(--font-display);
-    font-variation-settings:
-      "opsz" 96,
-      "wdth" 100;
+    font-variation-settings: "opsz" 96;
     letter-spacing: -0.03em;
     line-height: 0.98;
     text-wrap: balance;
@@ -73,9 +71,7 @@
 
   .display-sm {
     font-family: var(--font-display);
-    font-variation-settings:
-      "opsz" 24,
-      "wdth" 100;
+    font-variation-settings: "opsz" 24;
     letter-spacing: -0.015em;
     line-height: 1.15;
     text-wrap: balance;

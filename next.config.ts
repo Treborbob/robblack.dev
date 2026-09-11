@@ -64,6 +64,9 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_REGION:
       process.env.VERCEL_REGION ?? process.env.VERCEL_ENV ?? "local",
   },
+  async redirects() {
+    return [{ source: "/index", destination: "/", permanent: true }];
+  },
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },
