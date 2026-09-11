@@ -58,7 +58,7 @@ export default async function Image() {
           alignItems: "center",
           gap: 20,
           fontFamily: "Plex",
-          fontSize: 24,
+          fontSize: 22,
         }}
       >
         <div
@@ -74,7 +74,7 @@ export default async function Image() {
         </div>
         <div style={{ display: "flex", color: "#8e96a6" }}>
           {person.role} · {yearsShipping()} years in production ·{" "}
-          {person.location}
+          {person.location.replace(/, UK$/, "")}
         </div>
       </div>
     </div>,
