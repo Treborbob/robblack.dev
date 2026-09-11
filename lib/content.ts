@@ -52,7 +52,7 @@ export const person = {
   githubLabel: "github.com/treborbob",
   linkedin: "https://www.linkedin.com/in/rob-black-developer/",
   linkedinLabel: "linkedin.com/in/rob-black-developer",
-  currentOrg: "Paramount Visas Ltd",
+  currentOrg: "Paramount Visas",
   currentRole: "Business Systems Engineer",
 };
 
@@ -106,6 +106,10 @@ export const releases: Release[] = [
       {
         kind: "added",
         text: "Automations that take manual work, duplication and operational risk off the team.",
+      },
+      {
+        kind: "added",
+        text: "Shared CI, a versioned design system and a few MCP servers, so both apps ship the same way and the AI tooling has something safe to talk to.",
       },
       {
         kind: "fixed",
@@ -559,6 +563,20 @@ export const projects: Project[] = [
     description:
       "Public-facing rebuild with in-repo content authoring, modern frontend tooling and a deployment pipeline the business can keep updating. Product delivery across content, UX and environments, not just page implementation.",
     stack: ["Next.js 16", "TypeScript", "Tailwind 4", "Resend", "Vercel"],
+  },
+  {
+    name: "Platform and tooling",
+    label: "Shared CI, design system, MCP servers",
+    description:
+      "The plumbing under Waypoint and Vault: reusable GitHub Actions workflows with per-PR preview environments on anonymised database branches, nightly end-to-end runs, semantic releases with AI-drafted and sanitised notes, and a versioned design token package with drift checks in CI. Plus a handful of small MCP servers that give AI assistants safe, read-only access to the tools the business already runs on.",
+    stack: [
+      "GitHub Actions",
+      "Playwright",
+      "Neon branches",
+      "semantic-release",
+      "Tailwind 4 tokens",
+      "MCP",
+    ],
   },
 ];
 

@@ -97,8 +97,8 @@ export function Hero() {
 
         <div>
           <div className="flex items-baseline justify-between gap-4">
-            <h2 className="eyebrow">Current release</h2>
-            <p className="mono text-xs text-faint">
+            <h2 className="eyebrow whitespace-nowrap">Current release</h2>
+            <p className="mono hidden text-right text-xs text-faint xl:block">
               {person.currentRole} · {person.currentOrg}
             </p>
           </div>

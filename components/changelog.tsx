@@ -22,7 +22,7 @@ export function Changelog() {
       title="Every release, newest first."
       lede="Calendar versioned. One rollback, and it was on purpose."
     >
-      <div className="grid gap-12 lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-16">
+      <div className="grid gap-12 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-16">
         <nav aria-label="Release index" className="hidden lg:block">
           <ol className="mono sticky top-24 space-y-2 text-xs">
             {releases.map((release) => (
