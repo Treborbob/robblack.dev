@@ -63,6 +63,9 @@ export function Phosphor({ fade = "bottom" }: { fade?: "bottom" | "top" }) {
       const rect = host.getBoundingClientRect();
       w = rect.width;
       h = rect.height;
+      // A hidden or collapsed host measures 0x0; a zero-size canvas cannot be
+      // drawn from, so leave the previous frame alone until it has a size.
+      if (w === 0 || h === 0) return;
       canvas.width = base.width = Math.round(w * dpr);
       canvas.height = base.height = Math.round(h * dpr);
       canvas.style.width = `${w}px`;
