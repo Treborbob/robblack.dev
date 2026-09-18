@@ -26,11 +26,19 @@ export interface Release {
   branch?: boolean;
 }
 
+/** Who a build was for. Work is the day job; personal is evenings and weekends. */
+export type ProjectOrigin = "work" | "personal";
+
 export interface Project {
   name: string;
   label: string;
   description: string;
   stack: string[];
+  origin: ProjectOrigin;
+  /** Public source, where there is any. Work builds are private. */
+  repo?: string;
+  /** App icon under public/, for builds that have one. */
+  icon?: string;
 }
 
 export interface FocusArea {
@@ -538,10 +546,16 @@ export const releases: Release[] = [
   },
 ];
 
+export const projectOrigins: Record<ProjectOrigin, string> = {
+  work: person.currentOrg,
+  personal: "Side project",
+};
+
 export const projects: Project[] = [
   {
     name: "Waypoint",
     label: "Internal work-management platform",
+    origin: "work",
     description:
       "The system of record for the business: leads, enquiries, jobs and clients, with kanban boards, reminders and reporting. Case-management logic shaped around how the team actually works. Replaced Trello. Integrates with Vault so a job and its documents stay in step. Preview environments, release discipline and documentation to match.",
     stack: [
@@ -556,6 +570,7 @@ export const projects: Project[] = [
   {
     name: "Vault",
     label: "Applicant and document operations",
+    origin: "work",
     description:
       "Applicant records and their documents, organised properly: staff review queues, OCR-assisted processing of identity documents, an intake system that tracks what each application still needs, magic-link uploads so applicants never need an account, saved data views for staff, and appointment pack generation. GDPR built in: consent tracking, retention review and audited purge.",
     stack: [
@@ -570,6 +585,7 @@ export const projects: Project[] = [
   {
     name: "paramountvisas.com",
     label: "Public website rebuild",
+    origin: "work",
     description:
       "Public-facing rebuild with in-repo content authoring, modern frontend tooling and a deployment pipeline the business can keep updating. Product delivery across content, UX and environments, not just page implementation.",
     stack: ["Next.js 16", "TypeScript", "Tailwind 4", "Resend", "Vercel"],
@@ -577,6 +593,7 @@ export const projects: Project[] = [
   {
     name: "Platform and tooling",
     label: "Shared CI, design system, MCP servers",
+    origin: "work",
     description:
       "The plumbing under Waypoint and Vault: reusable GitHub Actions workflows with per-PR preview environments on anonymised database branches, nightly end-to-end runs, semantic releases with AI-drafted and sanitised notes, and a versioned design token package with drift checks in CI. Plus a handful of small MCP servers that give AI assistants safe, read-only access to the tools the business already runs on.",
     stack: [
@@ -587,6 +604,33 @@ export const projects: Project[] = [
       "Tailwind 4 tokens",
       "MCP",
     ],
+  },
+  {
+    name: "Rota",
+    label: "Household chore planner",
+    origin: "personal",
+    repo: "https://github.com/Treborbob/rota",
+    icon: "/builds/rota.png",
+    description:
+      "A calm, private chore rota for two people and one house. Work is balanced by estimated minutes rather than job counts, the planner is deterministic so the same inputs always give the same week, and every placement carries a reason. Recurrence runs from when a job was actually done, so finishing late never builds a backlog. The planning logic is a pure domain layer with no database or React in it, and the rules are written up properly. No points, no streaks, no leaderboard.",
+    stack: [
+      "Next.js 16",
+      "TypeScript",
+      "Prisma 7",
+      "Neon",
+      "Better Auth",
+      "PWA",
+    ],
+  },
+  {
+    name: "Gainsayer",
+    label: "macOS menu bar volume control",
+    origin: "personal",
+    repo: "https://github.com/Treborbob/gainsayer",
+    icon: "/builds/gainsayer.png",
+    description:
+      "A slider, the keyboard keys and a mute for the outputs macOS greys out: HDMI, optical, anything that reports no hardware level. Built on Core Audio process taps and a private aggregate device, so there is no driver, no virtual device and nothing to uninstall. It engages only when the default output has no volume control and stands aside when it does. If it crashes, the tap is torn down and the device plays at its normal level. Built for one desk. It will never grow into an audio suite.",
+    stack: ["Swift 6", "SwiftUI", "AppKit", "Core Audio", "Swift Testing"],
   },
 ];
 

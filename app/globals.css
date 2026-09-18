@@ -160,6 +160,50 @@
     white-space: nowrap;
   }
 
+  /* Build origin badge: who it was for. Same pill as a tag, colour encodes the origin. */
+  .origin {
+    --origin: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--origin);
+    border: 1px solid color-mix(in oklab, var(--origin) 45%, transparent);
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+  .origin-work {
+    --origin: var(--color-accent);
+  }
+  .origin-personal {
+    --origin: var(--color-changed);
+  }
+
+  /* Language bar: GitHub's linguist strip, one segment per language. */
+  .lang-bar {
+    display: flex;
+    height: 6px;
+    gap: 2px;
+    border-radius: 999px;
+    overflow: hidden;
+    max-width: 24rem;
+  }
+  .lang-bar > span {
+    display: block;
+    height: 100%;
+  }
+  .lang-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    margin-right: 0.4rem;
+    vertical-align: 0;
+  }
+
   .version-pill {
     font-family: var(--font-mono);
     font-weight: 500;
